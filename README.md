@@ -1,6 +1,6 @@
 # LittleAlchemist
 
-**TODO: Add description**
+Little Alchemist contains code snippets from the book "The Little Schemer" implemented in elixir.
 
 ## Installation
 
