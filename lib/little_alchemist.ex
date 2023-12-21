@@ -62,7 +62,7 @@ defmodule LittleAlchemist do
     rember_all_helper(item, tail, [head | acc])
   end
 
-  @spec rember_nopt(any, list(any)) :: list(any)
+  @spec rember_nopt_helper(any, list(any)) :: list(any)
   @doc """
   takes an atom and a list and removes the first instance of that atom. Without tail call optimization
 
@@ -90,4 +90,30 @@ defmodule LittleAlchemist do
   defp rember_nopt_helper(item, [head | tail]) do
     [head] ++ rember_nopt_helper(item, tail)
   end
+
+  @spec firsts(list(any)) :: list(any)
+  @doc """
+  takes a list of lists and returns the first element of each list
+
+  ## Examples
+
+      iex> LittleAlchemist.firsts([])
+      []
+
+      iex> LittleAlchemist.firsts([[:a, :b], [:c, :d]])
+      [:a, :c]
+
+      iex> LittleAlchemist.firsts([[[:a, :b], :c], [:d, :e]])
+      [[:a, :b], :d]
+  """
+  def firsts(list) do
+    firsts_helper(list, [])
+  end
+
+  defp firsts_helper([], acc), do: acc |> Enum.reverse
+
+  defp firsts_helper([[head | _rest] | tail], acc) do
+    firsts_helper(tail, [head | acc])
+  end
+
 end
