@@ -116,4 +116,32 @@ defmodule LittleAlchemist do
     firsts_helper(tail, [head | acc])
   end
 
+@spec insertR(any, any, list(any)) :: list (any)
+@doc"""
+inserts new to the right of old.
+
+## Examples
+    iex> LittleAlchemist.insertR(:b, :a, [])
+    []
+
+    iex> LittleAlchemist.insertR(:b, :a, [:a, :c])
+    [:a, :b, :c]
+
+    iex> LittleAlchemist.insertR(:c, :b, [:a, :b])
+    [:a, :b, :c]
+"""
+def insertR(new, old, l) do
+  insertRHelper(new, old, l, [])
+end
+
+defp insertRHelper(_new, _old, [], acc), do: acc |> Enum.reverse
+
+defp insertRHelper(new, old, [old | tail], acc) do
+  Enum.reverse(acc) ++ [old, new | tail]
+end
+
+defp insertRHelper(new, old, [head | tail], acc) do
+  insertRHelper(new, old, tail, [head | acc])
+end
+
 end
