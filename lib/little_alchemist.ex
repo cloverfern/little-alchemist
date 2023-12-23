@@ -172,4 +172,33 @@ defp insertL_helper(new, old, [head | tail], acc) do
   insertL_helper(new, old, tail, [head | acc])
 end
 
+@spec subst(any, any, list(any)) :: list (any)
+@doc"""
+substitutes first occurrence of old with new.
+
+## Examples
+    iex> LittleAlchemist.subst(:b, :a, [])
+    []
+
+    iex> LittleAlchemist.subst(:b, :a, [:a, :c])
+    [:b, :c]
+
+    iex> LittleAlchemist.subst(:c, :b, [:a, :b])
+    [:a, :c]
+"""
+def subst(new, old, l) do
+  subst_helper(new, old, l, [])
+end
+
+defp subst_helper(_new, _old, [], acc), do: acc |> Enum.reverse
+
+defp subst_helper(new, old, [old | tail], acc) do
+  Enum.reverse(acc) ++ [new | tail]
+end
+
+defp subst_helper(new, old, [head | tail], acc) do
+  subst_helper(new, old, tail, [head | acc])
+end
+
+
 end
