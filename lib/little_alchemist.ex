@@ -131,17 +131,45 @@ inserts new to the right of old.
     [:a, :b, :c]
 """
 def insertR(new, old, l) do
-  insertRHelper(new, old, l, [])
+  insertR_helper(new, old, l, [])
 end
 
-defp insertRHelper(_new, _old, [], acc), do: acc |> Enum.reverse
+defp insertR_helper(_new, _old, [], acc), do: acc |> Enum.reverse
 
-defp insertRHelper(new, old, [old | tail], acc) do
+defp insertR_helper(new, old, [old | tail], acc) do
   Enum.reverse(acc) ++ [old, new | tail]
 end
 
-defp insertRHelper(new, old, [head | tail], acc) do
-  insertRHelper(new, old, tail, [head | acc])
+defp insertR_helper(new, old, [head | tail], acc) do
+  insertR_helper(new, old, tail, [head | acc])
+end
+
+@spec insertL(any, any, list(any)) :: list (any)
+@doc"""
+inserts new to the left of old.
+
+## Examples
+    iex> LittleAlchemist.insertL(:b, :a, [])
+    []
+
+    iex> LittleAlchemist.insertL(:a, :b, [:b, :c])
+    [:a, :b, :c]
+
+    iex> LittleAlchemist.insertL(:b, :c, [:a, :c])
+    [:a, :b, :c]
+"""
+def insertL(new, old, l) do
+  insertL_helper(new, old, l, [])
+end
+
+defp insertL_helper(_new, _old, [], acc), do: acc |> Enum.reverse
+
+defp insertL_helper(new, old, [old | tail], acc) do
+  Enum.reverse(acc) ++ [new, old | tail]
+end
+
+defp insertL_helper(new, old, [head | tail], acc) do
+  insertL_helper(new, old, tail, [head | acc])
 end
 
 end
