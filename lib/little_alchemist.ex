@@ -200,5 +200,41 @@ defp subst_helper(new, old, [head | tail], acc) do
   subst_helper(new, old, tail, [head | acc])
 end
 
+@spec subst2(any, any, any, list(any)) :: list (any)
+@doc"""
+substitutes either the first occurrence of o1 or the first occurrence of o2 with new.
+
+## Examples
+    iex> LittleAlchemist.subst2(:b, :a, :c, [])
+    []
+
+    iex> LittleAlchemist.subst2(:b, :a, :d, [:a, :c])
+    [:b, :c]
+
+    iex> LittleAlchemist.subst2(:c, :d, :b, [:a, :b, :d])
+    [:a, :c, :d]
+
+    iex> LittleAlchemist.subst2(:c, :x, :d, [:a, :b, :d])
+    [:a, :b, :c]
+"""
+def subst2(new, o1, o2, l) do
+  subst2_helper(new, o1, o2, l, [])
+end
+
+defp subst2_helper(_new, _o1, _o2, [], acc), do: acc |> Enum.reverse
+
+defp subst2_helper(new, o1, _o2, [o1 | tail], acc) do
+  Enum.reverse(acc) ++ [new | tail]
+end
+
+defp subst2_helper(new, _o1, o2, [o2 | tail], acc) do
+  Enum.reverse(acc) ++ [new | tail]
+end
+
+defp subst2_helper(new, o1, o2, [head | tail], acc) do
+  subst2_helper(new, o1, o2, tail, [head | acc])
+end
+
+
 
 end
