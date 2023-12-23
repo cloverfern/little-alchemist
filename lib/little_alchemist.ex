@@ -33,33 +33,33 @@ defmodule LittleAlchemist do
     rember_helper(item, tail, [head | acc])
   end
 
-  @spec rember_all(any, list(any)) :: list(any)
+  @spec multirember(any, list(any)) :: list(any)
   @doc """
   takes an atom and a list and removes the first instance of that atom
 
   ## Examples
 
-      iex> LittleAlchemist.rember_all(:a, [])
+      iex> LittleAlchemist.multirember(:a, [])
       []
 
-      iex> LittleAlchemist.rember_all(:b, [:a, :b, :c])
+      iex> LittleAlchemist.multirember(:b, [:a, :b, :c])
       [:a, :c]
 
-      iex> LittleAlchemist.rember_all(:a, [:a, :b, :c, :a])
+      iex> LittleAlchemist.multirember(:a, [:a, :b, :c, :a])
       [:b, :c]
   """
-  def rember_all(item, list) do
-    rember_all_helper(item, list, [])
+  def multirember(item, list) do
+    multirember_helper(item, list, [])
   end
 
-  defp rember_all_helper(_item, [], acc), do: acc |> Enum.reverse
+  defp multirember_helper(_item, [], acc), do: acc |> Enum.reverse
 
-  defp rember_all_helper(item, [item | tail], acc) do
-    rember_all_helper(item, tail, acc)
+  defp multirember_helper(item, [item | tail], acc) do
+    multirember_helper(item, tail, acc)
   end
 
-  defp rember_all_helper(item, [head | tail], acc) do
-    rember_all_helper(item, tail, [head | acc])
+  defp multirember_helper(item, [head | tail], acc) do
+    multirember_helper(item, tail, [head | acc])
   end
 
   @spec rember_nopt_helper(any, list(any)) :: list(any)
