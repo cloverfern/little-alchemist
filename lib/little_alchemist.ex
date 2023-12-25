@@ -33,35 +33,6 @@ defmodule LittleAlchemist do
     rember_helper(item, tail, [head | acc])
   end
 
-  @spec multirember(any, list(any)) :: list(any)
-  @doc """
-  takes an atom and a list and removes the first instance of that atom
-
-  ## Examples
-
-      iex> LittleAlchemist.multirember(:a, [])
-      []
-
-      iex> LittleAlchemist.multirember(:b, [:a, :b, :c])
-      [:a, :c]
-
-      iex> LittleAlchemist.multirember(:a, [:a, :b, :c, :a])
-      [:b, :c]
-  """
-  def multirember(item, list) do
-    multirember_helper(item, list, [])
-  end
-
-  defp multirember_helper(_item, [], acc), do: acc |> Enum.reverse
-
-  defp multirember_helper(item, [item | tail], acc) do
-    multirember_helper(item, tail, acc)
-  end
-
-  defp multirember_helper(item, [head | tail], acc) do
-    multirember_helper(item, tail, [head | acc])
-  end
-
   @spec rember_nopt_helper(any, list(any)) :: list(any)
   @doc """
   takes an atom and a list and removes the first instance of that atom. Without tail call optimization
@@ -235,6 +206,89 @@ defp subst2_helper(new, o1, o2, [head | tail], acc) do
   subst2_helper(new, o1, o2, tail, [head | acc])
 end
 
+  @spec multirember(any, list(any)) :: list(any)
+  @doc """
+  takes an atom and a list and removes the first instance of that atom
 
+  ## Examples
+
+      iex> LittleAlchemist.multirember(:a, [])
+      []
+
+      iex> LittleAlchemist.multirember(:b, [:a, :b, :c])
+      [:a, :c]
+
+      iex> LittleAlchemist.multirember(:a, [:a, :b, :c, :a])
+      [:b, :c]
+  """
+  def multirember(item, list) do
+    multirember_helper(item, list, [])
+  end
+
+  defp multirember_helper(_item, [], acc), do: acc |> Enum.reverse
+
+  defp multirember_helper(item, [item | tail], acc) do
+    multirember_helper(item, tail, acc)
+  end
+
+  defp multirember_helper(item, [head | tail], acc) do
+    multirember_helper(item, tail, [head | acc])
+  end
+
+@spec multiinsertR(any, any, list(any)) :: list (any)
+@doc"""
+inserts new to the right of every occurrence of old.
+
+## Examples
+    iex> LittleAlchemist.multiinsertR(:b, :a, [])
+    []
+
+    iex> LittleAlchemist.multiinsertR(:b, :a, [:a, :c, :a])
+    [:a, :b, :c, :a, :b]
+
+    iex> LittleAlchemist.multiinsertR(:c, :b, [:a, :b, :b])
+    [:a, :b, :c, :b, :c]
+"""
+def multiinsertR(new, old, l) do
+  multiinsertR_helper(new, old, l, [])
+end
+
+defp multiinsertR_helper(_new, _old, [], acc), do: acc |> Enum.reverse
+
+defp multiinsertR_helper(new, old, [old | tail], acc) do
+  multiinsertR_helper(new, old, tail, [new, old | acc])
+end
+
+defp multiinsertR_helper(new, old, [head | tail], acc) do
+  multiinsertR_helper(new, old, tail, [head | acc])
+end
+
+@spec multiinsertL(any, any, list(any)) :: list (any)
+@doc"""
+inserts new to the left of every occurrence of old.
+
+## Examples
+    iex> LittleAlchemist.multiinsertL(:b, :a, [])
+    []
+
+    iex> LittleAlchemist.multiinsertL(:b, :a, [:a, :c, :a])
+    [:b, :a, :c, :b, :a]
+
+    iex> LittleAlchemist.multiinsertL(:c, :b, [:a, :b, :b])
+    [:a, :c, :b, :c, :b]
+"""
+def multiinsertL(new, old, l) do
+  multiinsertL_helper(new, old, l, [])
+end
+
+defp multiinsertL_helper(_new, _old, [], acc), do: acc |> Enum.reverse
+
+defp multiinsertL_helper(new, old, [old | tail], acc) do
+  multiinsertL_helper(new, old, tail, [old, new | acc])
+end
+
+defp multiinsertL_helper(new, old, [head | tail], acc) do
+  multiinsertL_helper(new, old, tail, [head | acc])
+end
 
 end
