@@ -291,4 +291,29 @@ defp multiinsertL_helper(new, old, [head | tail], acc) do
   multiinsertL_helper(new, old, tail, [head | acc])
 end
 
+@spec multisubst(any, any, list(any)) :: list (any)
+@doc"""
+substitutes every occurrence of old with new.
+
+## Examples
+    iex> LittleAlchemist.multisubst(:b, :a, [])
+    []
+
+    iex> LittleAlchemist.multisubst(:b, :a, [:a, :c, :a])
+    [:b, :c, :b]
+"""
+def multisubst(new, old, l) do
+  multisubst_helper(new, old, l, [])
+end
+
+defp multisubst_helper(_new, _old, [], acc), do: acc |> Enum.reverse
+
+defp multisubst_helper(new, old, [old | tail], acc) do
+  multisubst_helper(new, old, tail, [new | acc])
+end
+
+defp multisubst_helper(new, old, [head | tail], acc) do
+  multisubst_helper(new, old, tail, [head | acc])
+end
+
 end
