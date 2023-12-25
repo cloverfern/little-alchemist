@@ -1,6 +1,6 @@
-defmodule LittleAlchemistTest do
+defmodule ChapterThreeTest do
   use ExUnit.Case
-  doctest LittleAlchemist
+  doctest ChapterThree
 
 #  test "greets the world" do
 #    assert LittleAlchemist.hello() == :world

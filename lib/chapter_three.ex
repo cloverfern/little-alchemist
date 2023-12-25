@@ -1,6 +1,6 @@
-defmodule LittleAlchemist do
+defmodule ChapterThree do
   @moduledoc """
-  `LittleAlchemist` Implements the code for the book The Little Schemer
+  `ChapterThree` Implements the code for the book The Little Schemer
   in idiomatic Elixir.
   """
 
@@ -10,13 +10,13 @@ defmodule LittleAlchemist do
 
   ## Examples
 
-      iex> LittleAlchemist.rember(:a, [])
+      iex> ChapterThree.rember(:a, [])
       []
 
-      iex> LittleAlchemist.rember(:b, [:a, :b, :c])
+      iex> ChapterThree.rember(:b, [:a, :b, :c])
       [:a, :c]
 
-      iex> LittleAlchemist.rember(:a, [:a, :b, :c, :a])
+      iex> ChapterThree.rember(:a, [:a, :b, :c, :a])
       [:b, :c, :a]
   """
   def rember(item, list) do
@@ -33,19 +33,19 @@ defmodule LittleAlchemist do
     rember_helper(item, tail, [head | acc])
   end
 
-  @spec rember_nopt_helper(any, list(any)) :: list(any)
+  @spec rember_nopt(any, list(any)) :: list(any)
   @doc """
   takes an atom and a list and removes the first instance of that atom. Without tail call optimization
 
   ## Examples
 
-      iex> LittleAlchemist.rember_nopt(:a, [])
+      iex> ChapterThree.rember_nopt(:a, [])
       []
 
-      iex> LittleAlchemist.rember_nopt(:b, [:a, :b, :c])
+      iex> ChapterThree.rember_nopt(:b, [:a, :b, :c])
       [:a, :c]
 
-      iex> LittleAlchemist.rember_nopt(:a, [:a, :b, :c, :a])
+      iex> ChapterThree.rember_nopt(:a, [:a, :b, :c, :a])
       [:b, :c, :a]
   """
   def rember_nopt(item, list) do
@@ -68,13 +68,13 @@ defmodule LittleAlchemist do
 
   ## Examples
 
-      iex> LittleAlchemist.firsts([])
+      iex> ChapterThree.firsts([])
       []
 
-      iex> LittleAlchemist.firsts([[:a, :b], [:c, :d]])
+      iex> ChapterThree.firsts([[:a, :b], [:c, :d]])
       [:a, :c]
 
-      iex> LittleAlchemist.firsts([[[:a, :b], :c], [:d, :e]])
+      iex> ChapterThree.firsts([[[:a, :b], :c], [:d, :e]])
       [[:a, :b], :d]
   """
   def firsts(list) do
@@ -92,13 +92,13 @@ defmodule LittleAlchemist do
 inserts new to the right of old.
 
 ## Examples
-    iex> LittleAlchemist.insertR(:b, :a, [])
+    iex> ChapterThree.insertR(:b, :a, [])
     []
 
-    iex> LittleAlchemist.insertR(:b, :a, [:a, :c])
+    iex> ChapterThree.insertR(:b, :a, [:a, :c])
     [:a, :b, :c]
 
-    iex> LittleAlchemist.insertR(:c, :b, [:a, :b])
+    iex> ChapterThree.insertR(:c, :b, [:a, :b])
     [:a, :b, :c]
 """
 def insertR(new, old, l) do
@@ -120,13 +120,13 @@ end
 inserts new to the left of old.
 
 ## Examples
-    iex> LittleAlchemist.insertL(:b, :a, [])
+    iex> ChapterThree.insertL(:b, :a, [])
     []
 
-    iex> LittleAlchemist.insertL(:a, :b, [:b, :c])
+    iex> ChapterThree.insertL(:a, :b, [:b, :c])
     [:a, :b, :c]
 
-    iex> LittleAlchemist.insertL(:b, :c, [:a, :c])
+    iex> ChapterThree.insertL(:b, :c, [:a, :c])
     [:a, :b, :c]
 """
 def insertL(new, old, l) do
@@ -148,13 +148,13 @@ end
 substitutes first occurrence of old with new.
 
 ## Examples
-    iex> LittleAlchemist.subst(:b, :a, [])
+    iex> ChapterThree.subst(:b, :a, [])
     []
 
-    iex> LittleAlchemist.subst(:b, :a, [:a, :c])
+    iex> ChapterThree.subst(:b, :a, [:a, :c])
     [:b, :c]
 
-    iex> LittleAlchemist.subst(:c, :b, [:a, :b])
+    iex> ChapterThree.subst(:c, :b, [:a, :b])
     [:a, :c]
 """
 def subst(new, old, l) do
@@ -176,16 +176,16 @@ end
 substitutes either the first occurrence of o1 or the first occurrence of o2 with new.
 
 ## Examples
-    iex> LittleAlchemist.subst2(:b, :a, :c, [])
+    iex> ChapterThree.subst2(:b, :a, :c, [])
     []
 
-    iex> LittleAlchemist.subst2(:b, :a, :d, [:a, :c])
+    iex> ChapterThree.subst2(:b, :a, :d, [:a, :c])
     [:b, :c]
 
-    iex> LittleAlchemist.subst2(:c, :d, :b, [:a, :b, :d])
+    iex> ChapterThree.subst2(:c, :d, :b, [:a, :b, :d])
     [:a, :c, :d]
 
-    iex> LittleAlchemist.subst2(:c, :x, :d, [:a, :b, :d])
+    iex> ChapterThree.subst2(:c, :x, :d, [:a, :b, :d])
     [:a, :b, :c]
 """
 def subst2(new, o1, o2, l) do
@@ -212,13 +212,13 @@ end
 
   ## Examples
 
-      iex> LittleAlchemist.multirember(:a, [])
+      iex> ChapterThree.multirember(:a, [])
       []
 
-      iex> LittleAlchemist.multirember(:b, [:a, :b, :c])
+      iex> ChapterThree.multirember(:b, [:a, :b, :c])
       [:a, :c]
 
-      iex> LittleAlchemist.multirember(:a, [:a, :b, :c, :a])
+      iex> ChapterThree.multirember(:a, [:a, :b, :c, :a])
       [:b, :c]
   """
   def multirember(item, list) do
@@ -240,13 +240,13 @@ end
 inserts new to the right of every occurrence of old.
 
 ## Examples
-    iex> LittleAlchemist.multiinsertR(:b, :a, [])
+    iex> ChapterThree.multiinsertR(:b, :a, [])
     []
 
-    iex> LittleAlchemist.multiinsertR(:b, :a, [:a, :c, :a])
+    iex> ChapterThree.multiinsertR(:b, :a, [:a, :c, :a])
     [:a, :b, :c, :a, :b]
 
-    iex> LittleAlchemist.multiinsertR(:c, :b, [:a, :b, :b])
+    iex> ChapterThree.multiinsertR(:c, :b, [:a, :b, :b])
     [:a, :b, :c, :b, :c]
 """
 def multiinsertR(new, old, l) do
@@ -268,13 +268,13 @@ end
 inserts new to the left of every occurrence of old.
 
 ## Examples
-    iex> LittleAlchemist.multiinsertL(:b, :a, [])
+    iex> ChapterThree.multiinsertL(:b, :a, [])
     []
 
-    iex> LittleAlchemist.multiinsertL(:b, :a, [:a, :c, :a])
+    iex> ChapterThree.multiinsertL(:b, :a, [:a, :c, :a])
     [:b, :a, :c, :b, :a]
 
-    iex> LittleAlchemist.multiinsertL(:c, :b, [:a, :b, :b])
+    iex> ChapterThree.multiinsertL(:c, :b, [:a, :b, :b])
     [:a, :c, :b, :c, :b]
 """
 def multiinsertL(new, old, l) do
@@ -296,10 +296,10 @@ end
 substitutes every occurrence of old with new.
 
 ## Examples
-    iex> LittleAlchemist.multisubst(:b, :a, [])
+    iex> ChapterThree.multisubst(:b, :a, [])
     []
 
-    iex> LittleAlchemist.multisubst(:b, :a, [:a, :c, :a])
+    iex> ChapterThree.multisubst(:b, :a, [:a, :c, :a])
     [:b, :c, :b]
 """
 def multisubst(new, old, l) do
