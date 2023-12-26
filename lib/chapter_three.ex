@@ -1,7 +1,6 @@
 defmodule ChapterThree do
   @moduledoc """
-  `ChapterThree` Implements the code for the book The Little Schemer
-  in idiomatic Elixir.
+  Implements the code found in chapter three of The Little Schemer
   """
 
   @spec rember(any, list(any)) :: list(any)
