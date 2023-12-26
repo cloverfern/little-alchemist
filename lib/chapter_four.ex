@@ -16,7 +16,8 @@ defmodule ChapterFour do
   end
 
   def plus(n1, n2) do
-    add1(plus(n1, sub1(n2)))
+    plus(n1, sub1(n2))
+    |> add1
   end
 
   @doc """
