@@ -6,7 +6,7 @@ defmodule ChapterFour do
   defp sub1(n), do: n - 1
 
   @doc """
-  Adds two numbers together
+  Adds two positive numbers together
   ## Examples
   iex> ChapterFour.plus(46, 12)
   58
@@ -21,7 +21,8 @@ defmodule ChapterFour do
   end
 
   @doc """
-  ## Example
+  Adds two positive numbers together. Tail call optimized
+  ## Examples
   iex> ChapterFour.plus2(46, 12)
   58
   """
