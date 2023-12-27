@@ -12,10 +12,13 @@ defmodule ChapterFour do
   iex> ChapterFour.plus(46, 12)
   58
 
-  iex > ChapterFour.plus(-1, -2)
+  iex> ChapterFour.plus(-1, -2)
   -3
 
-  iex > ChapterFour.plus(-6, 2)
+  iex> ChapterFour.plus(1, -3)
+  -2
+
+  iex> ChapterFour.plus(-6, 2)
   -4
   """
   def plus(n1, 0) do
@@ -25,7 +28,7 @@ defmodule ChapterFour do
   def plus(n1, n2)
   when n2 < 0 do
     plus(n1, add1(n2))
-    |> add1
+    |> sub1
   end
 
   def plus(n1, n2) do
