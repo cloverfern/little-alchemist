@@ -42,6 +42,12 @@ defmodule ChapterFour do
   ## Examples
   iex> ChapterFour.plus_opt(46, 12)
   58
+
+  iex> ChapterFour.plus_opt(1, -3)
+  -2
+
+  iex> ChapterFour.plus_opt(-3, 1)
+  -2
   """
   def plus_opt(n1, n2) do
     plus_opt_helper(n1, n2, 0)
@@ -49,6 +55,11 @@ defmodule ChapterFour do
 
   defp plus_opt_helper(n1, 0, acc) do
     n1 + acc
+  end
+
+  defp plus_opt_helper(n1, n2, acc)
+  when n2 < 0 do
+    plus_opt_helper(n1, add1(n2), sub1(acc))
   end
 
   defp plus_opt_helper(n1, n2, acc) do
@@ -109,6 +120,6 @@ defmodule ChapterFour do
   end
 
   defp addtup_helper([head | tail], acc) do
-    addtup_helper(tail, plus(acc, head))
+    addtup_helper(tail, plus_opt(acc, head))
   end
 end
