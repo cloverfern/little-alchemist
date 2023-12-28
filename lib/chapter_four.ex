@@ -90,4 +90,25 @@ defmodule ChapterFour do
     minus_opt_helper(n1, sub1(n2), add1(acc))
   end
 
+  @spec addtup(list(any)) :: number
+  @doc """
+  addtup adds all of the numbers in a tuple and returns the result
+  ## Example
+  iex> ChapterFour.addtup([1, 2, 3])
+  6
+
+  iex> ChapterFour.addtup([1, 2, -3])
+  0
+  """
+  def addtup(l) do
+    addtup_helper(l, 0)
+  end
+
+  defp addtup_helper([], acc) do
+    acc
+  end
+
+  defp addtup_helper([head | tail], acc) do
+    addtup_helper(tail, plus(acc, head))
+  end
 end
