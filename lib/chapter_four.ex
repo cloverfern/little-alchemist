@@ -97,6 +97,11 @@ defmodule ChapterFour do
     n1 - acc
   end
 
+  defp minus_opt_helper(n1, n2, acc)
+  when n2 < 0 do
+    minus_opt_helper(n1, add1(n2), add1(acc))
+  end
+
   defp minus_opt_helper(n1, n2, acc) do
     minus_opt_helper(n1, sub1(n2), add1(acc))
   end
@@ -121,5 +126,35 @@ defmodule ChapterFour do
 
   defp addtup_helper([head | tail], acc) do
     addtup_helper(tail, plus_opt(acc, head))
+  end
+
+  @spec times(number, number) :: number
+  @doc """
+  times returns the multiplication of n1 times n2
+  ## Examples
+  iex> ChapterFour.times(2, 3)
+  6
+
+  iex> ChapterFour.times(2, -3)
+  -6
+
+  iex> ChapterFour.times(-2, 3)
+  -6
+  """
+  def times(n1, n2) do
+    times_helper(n1, n2, 0)
+  end
+
+  defp times_helper(_n1, 0, acc) do
+    acc
+  end
+
+  defp times_helper(n1, n2, acc)
+  when n2 < 0 do
+    times_helper(n1, add1(n2), minus_opt(acc, n1))
+  end
+
+  defp times_helper(n1, n2, acc) do
+    times_helper(n1, sub1(n2), plus_opt(acc, n1))
   end
 end
