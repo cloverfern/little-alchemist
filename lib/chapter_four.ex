@@ -7,7 +7,8 @@ defmodule ChapterFour do
 
   @spec plus(number, number) :: number
   @doc """
-  Adds two numbers together
+  `plus` returns the sum of two numbers.
+
   ## Examples
   iex> ChapterFour.plus(46, 12)
   58
@@ -21,89 +22,48 @@ defmodule ChapterFour do
   iex> ChapterFour.plus(-6, 2)
   -4
   """
-  def plus(n1, 0) do
-    n1
-  end
-
-  def plus(n1, n2)
-  when n2 < 0 do
-    plus(n1, add1(n2))
-    |> sub1
-  end
-
   def plus(n1, n2) do
-    plus(n1, sub1(n2))
-    |> add1
+    plus_helper(n1, n2, 0)
   end
 
-  @spec plus_opt(number, number) :: number
-  @doc """
-  Adds two positive numbers together. Tail call optimized
-  ## Examples
-  iex> ChapterFour.plus_opt(46, 12)
-  58
-
-  iex> ChapterFour.plus_opt(1, -3)
-  -2
-
-  iex> ChapterFour.plus_opt(-3, 1)
-  -2
-  """
-  def plus_opt(n1, n2) do
-    plus_opt_helper(n1, n2, 0)
-  end
-
-  defp plus_opt_helper(n1, 0, acc) do
+  defp plus_helper(n1, 0, acc) do
     n1 + acc
   end
 
-  defp plus_opt_helper(n1, n2, acc)
+  defp plus_helper(n1, n2, acc)
   when n2 < 0 do
-    plus_opt_helper(n1, add1(n2), sub1(acc))
+    plus_helper(n1, add1(n2), sub1(acc))
   end
 
-  defp plus_opt_helper(n1, n2, acc) do
-    plus_opt_helper(n1, sub1(n2), add1(acc))
+  defp plus_helper(n1, n2, acc) do
+    plus_helper(n1, sub1(n2), add1(acc))
   end
 
   @spec minus(number, number) :: number
-  @doc """
-  Subtracts n2 from n1
+  @doc"""
+  `minus` returns the difference between two numbers
   ## Examples
   iex> ChapterFour.minus(46, 12)
   34
-  """
-  def minus(n1, 0) do
-    n1
-  end
 
+  iex> ChapterFour.minus(3, -1)
+  4
+  """
   def minus(n1, n2) do
-    minus(n1, sub1(n2))
-    |> sub1
+    minus_helper(n1, n2, 0)
   end
 
-  @spec minus_opt(number, number) :: number
-  @doc"""
-  Substracts n2 from n1. Tail call optimized
-  ## Examples
-  iex> ChapterFour.minus_opt(46, 12)
-  34
-  """
-  def minus_opt(n1, n2) do
-    minus_opt_helper(n1, n2, 0)
-  end
-
-  defp minus_opt_helper(n1, 0, acc) do
+  defp minus_helper(n1, 0, acc) do
     n1 - acc
   end
 
-  defp minus_opt_helper(n1, n2, acc)
+  defp minus_helper(n1, n2, acc)
   when n2 < 0 do
-    minus_opt_helper(n1, add1(n2), add1(acc))
+    minus_helper(n1, add1(n2), sub1(acc))
   end
 
-  defp minus_opt_helper(n1, n2, acc) do
-    minus_opt_helper(n1, sub1(n2), add1(acc))
+  defp minus_helper(n1, n2, acc) do
+    minus_helper(n1, sub1(n2), add1(acc))
   end
 
   @spec addtup(list(any)) :: number
@@ -125,36 +85,80 @@ defmodule ChapterFour do
   end
 
   defp addtup_helper([head | tail], acc) do
-    addtup_helper(tail, plus_opt(acc, head))
+    addtup_helper(tail, plus(acc, head))
   end
 
-  @spec times(number, number) :: number
+  @spec mult(number, number) :: number
   @doc """
-  times returns the multiplication of n1 times n2
+  `mult` returns the product of 2 numbers
   ## Examples
-  iex> ChapterFour.times(2, 3)
+  iex> ChapterFour.mult(2, 3)
   6
 
-  iex> ChapterFour.times(2, -3)
+  iex> ChapterFour.mult(2, -3)
   -6
 
-  iex> ChapterFour.times(-2, 3)
+  iex> ChapterFour.mult(-2, 3)
   -6
+
+  iex> ChapterFour.mult(3, 0)
+  0
   """
-  def times(n1, n2) do
-    times_helper(n1, n2, 0)
+  def mult(n1, n2) do
+    mult_helper(n1, n2, 0)
   end
 
-  defp times_helper(_n1, 0, acc) do
+  defp mult_helper(_n1, 0, acc) do
     acc
   end
 
-  defp times_helper(n1, n2, acc)
+  defp mult_helper(n1, n2, acc)
   when n2 < 0 do
-    times_helper(n1, add1(n2), minus_opt(acc, n1))
+    mult_helper(n1, add1(n2), minus(acc, n1))
   end
 
-  defp times_helper(n1, n2, acc) do
-    times_helper(n1, sub1(n2), plus_opt(acc, n1))
+  defp mult_helper(n1, n2, acc) do
+    mult_helper(n1, sub1(n2), plus(acc, n1))
   end
+
+  @spec sumtup(list(number), list(number)) :: list(number)
+  @doc """
+    `sumtup` takes two lists of numbers and returns a new list where each element
+     is the sum of the corresponding elements from the two input lists.
+
+    This function expects both input lists to be of the same length. It performs
+    element-wise addition, where the first element of the first list is added to
+    the first element of the second list, the second element of the first list
+    to the second element of the second list, and so on.
+
+    If the lists are of different lengths, the behavior is undefined.
+
+    ## Examples
+
+    iex> ChapterFour.sumtup([1, 1, 1], [2, 2, 2])
+    [3, 3, 3]
+
+    iex> ChapterFour.sumtup([3, 4, 5], [1, 2, 3])
+    [4, 6, 8]
+
+    ## Notes
+
+    - If given empty lists, the function will return an empty list.
+    - The function does not perform type checking on the elements of the lists.
+    It's the caller's responsibility to ensure that both lists contain only
+    numbers.
+  """
+  def sumtup(list_a, list_b) do
+    sumtup_helper(list_a, list_b, [])
+  end
+
+  defp sumtup_helper([], [], acc) do
+    acc
+    |> Enum.reverse
+  end
+
+  defp sumtup_helper([head_a | tail_a], [head_b | tail_b], acc) do
+    sumtup_helper(tail_a, tail_b, [plus(head_a, head_b) | acc])
+  end
+
 end
