@@ -7,7 +7,7 @@ defmodule ChapterFour do
 
   @spec plus(number, number) :: number
   @doc """
-  `plus` returns the sum of two numbers.
+  `plus` takes in two numbers and returns their sum
 
   ## Examples
   iex> ChapterFour.plus(46, 12)
@@ -41,7 +41,7 @@ defmodule ChapterFour do
 
   @spec minus(number, number) :: number
   @doc"""
-  `minus` returns the difference between two numbers
+  `minus` takes in two numbers and returns their difference
   ## Examples
   iex> ChapterFour.minus(46, 12)
   34
@@ -68,7 +68,7 @@ defmodule ChapterFour do
 
   @spec addtup(list(any)) :: number
   @doc """
-  addtup adds all of the numbers in a tuple and returns the result
+  `addtup` takes in a list of numbers and returns the result of their sum
   ## Example
   iex> ChapterFour.addtup([1, 2, 3])
   6
@@ -90,7 +90,7 @@ defmodule ChapterFour do
 
   @spec mult(number, number) :: number
   @doc """
-  `mult` returns the product of 2 numbers
+  `mult` takes 2 numbers and returns returns their product
   ## Examples
   iex> ChapterFour.mult(2, 3)
   6
