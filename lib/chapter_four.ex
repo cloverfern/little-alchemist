@@ -223,4 +223,30 @@ defmodule ChapterFour do
     less_than(sub1(n), sub1(m))
   end
 
+  @spec equal(number, number) :: boolean
+  @doc """
+  `equal` takes in two numbers and returns true if the first number is
+  equal to the second, otherwise it returns false.
+
+  ## Examples
+  iex> ChapterFour.equal(5, 3)
+  false
+
+  iex> ChapterFour.equal(2, 3)
+  false
+
+  iex> ChapterFour.equal(3, 3)
+  true
+  """
+  def equal(n, m) do
+    cond do
+      less_than(n, m) ->
+        false
+      greater_than(n, m) ->
+        false
+      true ->
+        true
+    end
+  end
+
 end
