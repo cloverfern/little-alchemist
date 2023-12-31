@@ -194,15 +194,10 @@ defmodule ChapterFour do
   iex> ChapterFour.greater_than(3, 3)
   false
   """
-  def greater_than(0, 0), do: false
-
   def greater_than(0, _m), do: false
-
   def greater_than(_n, 0), do: true
 
   def greater_than(n, m) do
     greater_than(sub1(n), sub1(m))
   end
-
-
 end
