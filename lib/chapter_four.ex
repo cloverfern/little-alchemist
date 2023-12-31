@@ -200,4 +200,27 @@ defmodule ChapterFour do
   def greater_than(n, m) do
     greater_than(sub1(n), sub1(m))
   end
+
+  @spec less_than(number, number) :: boolean
+  @doc """
+  `less_than` takes in two numbers and returns true if the first number is
+  smaller than the second, otherwise it returns false.
+
+  ## Examples
+  iex> ChapterFour.less_than(5, 3)
+  false
+
+  iex> ChapterFour.less_than(2, 3)
+  true
+
+  iex> ChapterFour.less_than(3, 3)
+  false
+  """
+  def less_than(_n, 0), do: false
+  def less_than(0, _m), do: true
+
+  def less_than(n, m) do
+    less_than(sub1(n), sub1(m))
+  end
+
 end
