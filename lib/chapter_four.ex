@@ -126,12 +126,12 @@ defmodule ChapterFour do
     `sumtup` takes two lists of numbers and returns a new list where each element
      is the sum of the corresponding elements from the two input lists.
 
-    This function expects both input lists to be of the same length. It performs
-    element-wise addition, where the first element of the first list is added to
-    the first element of the second list, the second element of the first list
-    to the second element of the second list, and so on.
+    It performs element-wise addition, where the first element of the first list
+    is added to the first element of the second list, the second element of the
+    first list to the second element of the second list, and so on.
 
-    If the lists are of different lengths, the behavior is undefined.
+    If the lists are of different lengths, the shorter list is treated as
+    having a pad of zeroes to the right to match the length of the longer one.
 
     ## Examples
 
@@ -140,6 +140,12 @@ defmodule ChapterFour do
 
     iex> ChapterFour.sumtup([3, 4, 5], [1, 2, 3])
     [4, 6, 8]
+
+    iex> ChapterFour.sumtup([1, 2], [0, 0, 3])
+    [1, 2, 3]
+
+    iex> ChapterFour.sumtup([0, 0, 3], [1, 2])
+    [1, 2, 3]
 
     ## Notes
 
@@ -155,6 +161,18 @@ defmodule ChapterFour do
   defp sumtup_helper([], [], acc) do
     acc
     |> Enum.reverse
+  end
+
+  defp sumtup_helper([], [head | tail], acc) do
+    acc
+    |> Enum.reverse
+    |> Enum.concat([head | tail])
+  end
+
+  defp sumtup_helper([head | tail], [], acc) do
+    acc
+    |> Enum.reverse
+    |> Enum.concat([head | tail])
   end
 
   defp sumtup_helper([head_a | tail_a], [head_b | tail_b], acc) do
