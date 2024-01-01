@@ -249,4 +249,38 @@ defmodule ChapterFour do
     end
   end
 
+  @spec exp(number, number) :: number
+  @doc """
+  `exp` takes two numbers and returns the first number raised to the power of
+  the second number
+
+  ## Example
+  iex> ChapterFour.exp(2, 2)
+  4
+
+  iex> ChapterFour.exp(5, 5)
+  3125
+
+  iex> ChapterFour.exp(0, 100)
+  0
+
+  iex> ChapterFour.exp(1, 50)
+  1
+  """
+  def exp(n, pow) do
+    exp_helper(n, pow, 1)
+  end
+
+  defp exp_helper(0, _pow, 1) do
+    0
+  end
+
+  defp exp_helper(_n, 0, acc) do
+    acc
+  end
+
+  defp exp_helper(n, pow, acc) do
+    exp_helper(n, sub1(pow), mult(acc, n))
+  end
+
 end
