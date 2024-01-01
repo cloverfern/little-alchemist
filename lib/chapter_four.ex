@@ -23,11 +23,11 @@ defmodule ChapterFour do
   -4
   """
   def plus(n1, n2) do
-    plus_helper(n1, n2, 0)
+    plus_helper(n1, n2, n1)
   end
 
-  defp plus_helper(n1, 0, acc) do
-    n1 + acc
+  defp plus_helper(_n1, 0, acc) do
+    acc
   end
 
   defp plus_helper(n1, n2, acc)
@@ -50,20 +50,20 @@ defmodule ChapterFour do
   4
   """
   def minus(n1, n2) do
-    minus_helper(n1, n2, 0)
+    minus_helper(n1, n2, n1)
   end
 
-  defp minus_helper(n1, 0, acc) do
-    n1 - acc
+  defp minus_helper(_n1, 0, acc) do
+    acc
   end
 
   defp minus_helper(n1, n2, acc)
   when n2 < 0 do
-    minus_helper(n1, add1(n2), sub1(acc))
+    minus_helper(n1, add1(n2), add1(acc))
   end
 
   defp minus_helper(n1, n2, acc) do
-    minus_helper(n1, sub1(n2), add1(acc))
+    minus_helper(n1, sub1(n2), sub1(acc))
   end
 
   @spec addtup(list(any)) :: number
