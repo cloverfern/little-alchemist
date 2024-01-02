@@ -283,4 +283,33 @@ defmodule ChapterFour do
     exp_helper(n, sub1(pow), mult(acc, n))
   end
 
+  @spec div(number, number) :: number
+  @doc """
+  `div` takes in two numbers and returns the quotient of the two
+  ## Examples
+  iex> ChapterFour.div(12, 6)
+  2
+
+  iex> ChapterFour.div(10, 100)
+  0
+
+  iex> ChapterFour.div(100, 10)
+  10
+
+  iex> ChapterFour.div(8, 3)
+  2
+  """
+  def div(n, m) do
+    div_helper(n, m, 0)
+  end
+
+  defp div_helper(n, m, acc)
+  when n < m do
+    acc
+  end
+
+  defp  div_helper(n, m, acc) do
+    div_helper(minus(n, m), m, add1(acc))
+  end
+
 end
