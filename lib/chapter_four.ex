@@ -356,7 +356,7 @@ defmodule ChapterFour do
 
  def pick(i, list)
  when i < 0 do
-  i = len(list) + i
+  i = plus len(list), i
   pick(i, list)
  end
 
@@ -398,12 +398,39 @@ defmodule ChapterFour do
 
   defp rempick_helper(i, list, acc)
   when i < 0 do
-    i = len(list) + i
+    i = plus len(list), i
     rempick_helper(i, list, acc)
   end
 
   defp rempick_helper(i, [head | tail], acc) do
     rempick_helper(sub1(i), tail, [head | acc])
+  end
+
+  @spec no_nums(list(any)) :: list(any)
+  @doc """
+  `no_nums` takes in a list and removes every numerical element in the list
+
+  ## Example
+  iex> ChapterFour.no_nums([1, :a, 2, :b])
+  [:a, :b]
+  """
+
+  def no_nums(list) do
+    no_nums_helper(list, [])
+  end
+
+  defp no_nums_helper([], acc) do
+    acc
+    |> Enum.reverse
+  end
+
+  defp no_nums_helper([head | tail], acc)
+  when is_number head do
+    no_nums_helper(tail, acc)
+  end
+
+  defp no_nums_helper([head | tail], acc) do
+    no_nums_helper(tail, [head | acc])
   end
 
 end
