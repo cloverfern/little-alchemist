@@ -460,5 +460,38 @@ defmodule ChapterFour do
     all_nums_helper(tail, [head | acc])
   end
 
+  @spec occur(any, list(any)) :: number
+  @doc """
+  `occur` takes in any, and a list and counts the number of times that the
+  element appears in the list
+
+  ## Examples
+  iex> ChapterFour.occur(1, [])
+  0
+
+  iex> ChapterFour.occur(1, [2, 3])
+  0
+
+  iex> ChapterFour.occur(:a, [:a, :b, :a, :c, :a])
+  3
+  """
+
+  def occur(elem, list) do
+    occur_helper(elem, list, 0)
+  end
+
+  defp occur_helper(_elem, [], acc) do
+    acc
+  end
+
+  defp occur_helper(elem, [elem | tail], acc) do
+    occur_helper(elem, tail, add1(acc))
+  end
+
+  defp occur_helper(elem, [_head | tail], acc) do
+    occur_helper(elem, tail, acc)
+  end
+
+
 
 end
