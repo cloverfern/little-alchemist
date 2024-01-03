@@ -312,4 +312,27 @@ defmodule ChapterFour do
     div_helper(minus(n, m), m, add1(acc))
   end
 
+  @spec len(list(any)) :: number
+  @doc """
+  `len` receives a list and returns its length
+  ## Examples
+  iex> ChapterFour.len([])
+  0
+
+  iex> ChapterFour.len([1, 2, 3])
+  3
+  """
+  def len(list) do
+    len_helper(list, 0)
+  end
+
+  defp len_helper([], acc) do
+    acc
+  end
+
+  defp len_helper([_head | tail], acc) do
+    len_helper(tail, add1(acc))
+  end
+
+
 end
