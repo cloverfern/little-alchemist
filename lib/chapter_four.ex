@@ -351,13 +351,13 @@ defmodule ChapterFour do
   3
 
   iex> ChapterFour.pick(-1, [1, 2, 3])
-  1
+  3
   """
 
  def pick(i, list)
  when i < 0 do
-   [head | _tail] = list
-   head
+  i = len(list) + i
+  pick(i, list)
  end
 
   def pick(0, [head | _tail]) do
@@ -368,5 +368,42 @@ defmodule ChapterFour do
     pick(sub1(i), tail)
   end
 
+  @spec rempick(number, list(any)) :: any
+  @doc """
+  `rempick` takes in a number and a list and returns the list without the value
+  at the location of the number. The list is zero indexed.
+
+  #Examples
+  iex> ChapterFour.rempick(0, [1])
+  []
+
+  iex> ChapterFour.rempick(1, [1, 2])
+  [1]
+
+  iex> ChapterFour.rempick(2, [1, 2, 3])
+  [1, 2]
+
+  iex> ChapterFour.rempick(-1, [1, 2, 3])
+  [1, 2]
+  """
+  def rempick(i, list) do
+    rempick_helper(i, list, [])
+  end
+
+  defp rempick_helper(0, [_head | tail], acc) do
+    acc
+    |> Enum.reverse
+    |> Enum.concat(tail)
+  end
+
+  defp rempick_helper(i, list, acc)
+  when i < 0 do
+    i = len(list) + i
+    rempick_helper(i, list, acc)
+  end
+
+  defp rempick_helper(i, [head | tail], acc) do
+    rempick_helper(sub1(i), tail, [head | acc])
+  end
 
 end
