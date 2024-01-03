@@ -433,4 +433,32 @@ defmodule ChapterFour do
     no_nums_helper(tail, [head | acc])
   end
 
+  @spec all_nums(list(any)) :: list(any)
+  @doc """
+  `all_nums` takes in a list and removes every non-numerical element in the list
+
+  ## Example
+  iex> ChapterFour.all_nums([1, :a, 2, :b])
+  [1, 2]
+  """
+
+  def all_nums(list) do
+    all_nums_helper(list, [])
+  end
+
+  defp all_nums_helper([], acc) do
+    acc
+    |> Enum.reverse
+  end
+
+  defp all_nums_helper([head | tail], acc)
+  when not is_number head do
+    all_nums_helper(tail, acc)
+  end
+
+  defp all_nums_helper([head | tail], acc) do
+    all_nums_helper(tail, [head | acc])
+  end
+
+
 end
