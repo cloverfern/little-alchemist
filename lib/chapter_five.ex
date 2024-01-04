@@ -30,9 +30,37 @@ defmodule ChapterFive do
     rember_star_helper(elem, tail, acc)
   end
 
-
   defp rember_star_helper(elem, [head | tail], acc) do
     rember_star_helper(elem, tail, [head | acc])
+  end
+
+  @spec insertR_star(any, any, list(any)) :: list(any)
+  @doc """
+  `insertR_star` takes in two values and a list. It returns a new list with the
+  first value inserted to the right of every occurance of the second value in
+  the list
+
+  ## Examples
+  iex> ChapterFive.insertR_star(:b, :a, [:a, :c, [:a], [[:a, :c], :a], :a])
+  [:a, :b, :c, [:a, :b], [[:a, :b, :c], :a, :b], :a, :b]
+  """
+  def insertR_star(new, old, list) do
+    insertR_star_helper(new, old, list, [])
+  end
+
+  defp insertR_star_helper(_new, _old, [], acc), do: acc |> Enum.reverse
+
+  defp insertR_star_helper(new, old, [head | tail], acc)
+  when is_list(head) do
+    insertR_star_helper(new, old, tail, [insertR_star_helper(new, old, head, []) | acc])
+  end
+
+  defp insertR_star_helper(new, old, [old | tail], acc) do
+    insertR_star_helper(new, old, tail, [new, old | acc])
+  end
+
+  defp insertR_star_helper(new, old, [head | tail], acc) do
+    insertR_star_helper(new, old, tail, [head | acc])
   end
 
 end
