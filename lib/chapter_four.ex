@@ -359,6 +359,18 @@ defmodule ChapterFour do
     len_helper(tail, add1(acc))
   end
 
+  @spec len_reduce(list(any)) :: number
+  @doc """
+  `len_reduce` receives a list and returns its length
+  ## Examples
+  iex> ChapterFour.len_reduce([])
+  0
+
+  iex> ChapterFour.len_reduce([1, 2, 3])
+  3
+  """
+  def len_reduce(list), do: Enum.reduce(list, 0,  fn _, acc -> add1(acc) end)
+
   @spec pick(number, list(any)) :: any
   @doc """
   `pick` takes in a number and a list and returns the value at that location in
@@ -379,11 +391,11 @@ defmodule ChapterFour do
   3
   """
 
- def pick(i, list)
- when i < 0 do
-  i = plus len(list), i
-  pick(i, list)
- end
+  def pick(i, list)
+  when i < 0 do
+    i = plus len(list), i
+    pick(i, list)
+  end
 
   def pick(0, [head | _tail]) do
     head
@@ -391,6 +403,32 @@ defmodule ChapterFour do
 
   def pick(i, [_head | tail]) do
     pick(sub1(i), tail)
+  end
+
+  @spec pick_reduce(number, list(any)) :: any
+  @doc """
+  `pick_reduce` takes in a number and a list and returns the value at that location in
+  the list. The number is zero indexed. The caller is responsible for passing a
+  number within the bounds of the list.
+
+  #Examples
+  iex> ChapterFour.pick_reduce(0, [1])
+  1
+
+  iex> ChapterFour.pick_reduce(1, [1, 2])
+  2
+
+  iex> ChapterFour.pick_reduce(2, [1, 2, 3])
+  3
+
+  iex> ChapterFour.pick_reduce(-1, [1, 2, 3])
+  3
+  """
+  def pick_reduce(index, list) do
+    Enum.reduce(list, 0, fn
+      elem, acc when index == acc -> elem
+      _elem, acc -> add1(acc)
+      end)
   end
 
   @spec rempick(number, list(any)) :: any
