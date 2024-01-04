@@ -179,6 +179,31 @@ defmodule ChapterFour do
     sumtup_helper(tail_a, tail_b, [plus(head_a, head_b) | acc])
   end
 
+  @spec sumtup_map(list(number), list(number)) :: list(number)
+  @doc """
+    `sumtup_map` does the same as `sumtup` but uses map to do it
+
+    ## Examples
+
+    iex> ChapterFour.sumtup_map([1, 1, 1], [2, 2, 2])
+    [3, 3, 3]
+
+    iex> ChapterFour.sumtup_map([3, 4, 5], [1, 2, 3])
+    [4, 6, 8]
+
+    ## Notes
+
+    - If given empty lists, the function will return an empty list.
+    - The function does not perform type checking on the elements of the lists.
+    It's the caller's responsibility to ensure that both lists contain only
+    numbers.
+    - Lists must be the same length
+  """
+  def sumtup_map(list_a, list_b) do
+    Enum.zip(list_a, list_b)
+    |> Enum.map(fn {a, b} -> plus(a, b) end)
+  end
+
   @spec greater_than(number, number) :: boolean
   @doc """
   `greater_than` takes in two numbers and returns true if the first number is
