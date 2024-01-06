@@ -405,32 +405,6 @@ defmodule ChapterFour do
     pick(sub1(i), tail)
   end
 
-  @spec pick_reduce(number, list(any)) :: any
-  @doc """
-  `pick_reduce` takes in a number and a list and returns the value at that location in
-  the list. The number is zero indexed. The caller is responsible for passing a
-  number within the bounds of the list.
-
-  #Examples
-  iex> ChapterFour.pick_reduce(0, [1])
-  1
-
-  iex> ChapterFour.pick_reduce(1, [1, 2])
-  2
-
-  iex> ChapterFour.pick_reduce(2, [1, 2, 3])
-  3
-
-  iex> ChapterFour.pick_reduce(-1, [1, 2, 3])
-  3
-  """
-  def pick_reduce(index, list) do
-    Enum.reduce(list, 0, fn
-      elem, acc when index == acc -> elem
-      _elem, acc -> add1(acc)
-      end)
-  end
-
   @spec rempick(number, list(any)) :: any
   @doc """
   `rempick` takes in a number and a list and returns the list without the value
@@ -467,6 +441,40 @@ defmodule ChapterFour do
 
   defp rempick_helper(i, [head | tail], acc) do
     rempick_helper(sub1(i), tail, [head | acc])
+  end
+
+  @spec rempick_reduce(number, list(any)) :: any
+  @doc """
+  `rempick_reduce` takes in a number and a list and returns the list without the value
+  at the location of the number. The list is zero indexed.
+
+  #Examples
+  iex> ChapterFour.rempick_reduce(0, [1])
+  []
+
+  iex> ChapterFour.rempick_reduce(1, [1, 2])
+  [1]
+
+  iex> ChapterFour.rempick_reduce(2, [1, 2, 3])
+  [1, 2]
+
+  iex> ChapterFour.rempick_reduce(-1, [1, 2, 3])
+  [1, 2]
+  """
+  def rempick_reduce(i, list)
+  when i < 0 do
+    i = plus(len_reduce(list), i)
+    rempick_reduce(i, list)
+  end
+
+  def rempick_reduce(i, list) do
+    list
+    |> Enum.with_index
+    |> Enum.reduce([], fn
+      {elem, index}, acc when index != i -> [elem | acc]
+      _, acc -> acc
+      end)
+    |> Enum.reverse
   end
 
   @spec no_nums(list(any)) :: list(any)
