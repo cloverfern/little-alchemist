@@ -504,6 +504,20 @@ defmodule ChapterFour do
     no_nums_helper(tail, [head | acc])
   end
 
+  @spec no_nums_filter(list(any)) :: list(any)
+  @doc """
+  `no_nums_filter` takes in a list and removes every numerical element in the list
+
+  ## Example
+  iex> ChapterFour.no_nums_filter([1, :a, 2, :b])
+  [:a, :b]
+  """
+
+  def no_nums_filter(list) do
+    list
+    |> Enum.filter(fn x -> not is_number(x) end)
+  end
+
   @spec all_nums(list(any)) :: list(any)
   @doc """
   `all_nums` takes in a list and removes every non-numerical element in the list
@@ -529,6 +543,20 @@ defmodule ChapterFour do
 
   defp all_nums_helper([head | tail], acc) do
     all_nums_helper(tail, [head | acc])
+  end
+
+  @spec all_nums_filter(list(any)) :: list(any)
+  @doc """
+  `all_nums_filter` takes in a list and removes every non-numerical element in the list
+
+  ## Example
+  iex> ChapterFour.all_nums_filter([1, :a, 2, :b])
+  [1, 2]
+  """
+
+  def all_nums_filter(list) do
+    list
+    |> Enum.filter(fn x -> is_number(x) end)
   end
 
   @spec occur(any, list(any)) :: number
