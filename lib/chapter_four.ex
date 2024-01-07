@@ -591,6 +591,28 @@ defmodule ChapterFour do
     occur_helper(elem, tail, acc)
   end
 
+  @spec occur_reduce(any, list(any)) :: number
+  @doc """
+  `occur_reduce` takes in any, and a list and counts the number of times that the
+  element appears in the list
 
+  ## Examples
+  iex> ChapterFour.occur_reduce(1, [])
+  0
+
+  iex> ChapterFour.occur_reduce(1, [2, 3])
+  0
+
+  iex> ChapterFour.occur_reduce(:a, [:a, :b, :a, :c, :a])
+  3
+  """
+
+  def occur_reduce(elem, list) do
+    list
+    |> Enum.reduce(0, fn
+      e, acc when e == elem -> add1(acc)
+      _, acc -> acc
+    end)
+  end
 
 end
