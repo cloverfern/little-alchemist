@@ -1,5 +1,4 @@
 defmodule ChapterFive do
-  @spec rember_star(any, list(any)) :: list(any)
   @doc """
   `rember_star` takes in an atom and a list and removes every instance of the
   atom in the list or in inner lists
@@ -12,6 +11,7 @@ defmodule ChapterFive do
   iex> ChapterFive.rember_star(:c, [[:c], [[:a, :b, :c], :c], :c])
   [[], [[:a, :b]]]
   """
+  @spec rember_star(any, list(any)) :: list(any)
   def rember_star(elem, list) do
     rember_star_helper(elem, list, [])
   end
@@ -34,7 +34,6 @@ defmodule ChapterFive do
     rember_star_helper(elem, tail, [head | acc])
   end
 
-  @spec insertR_star(any, any, list(any)) :: list(any)
   @doc """
   `insertR_star` takes in two values and a list. It returns a new list with the
   first value inserted to the right of every occurance of the second value in
@@ -44,6 +43,7 @@ defmodule ChapterFive do
   iex> ChapterFive.insertR_star(:b, :a, [:a, :c, [:a], [[:a, :c], :a], :a])
   [:a, :b, :c, [:a, :b], [[:a, :b, :c], :a, :b], :a, :b]
   """
+  @spec insertR_star(any, any, list(any)) :: list(any)
   def insertR_star(new, old, list) do
     insertR_star_helper(new, old, list, [])
   end

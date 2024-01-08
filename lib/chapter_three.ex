@@ -3,7 +3,6 @@ defmodule ChapterThree do
   Implements the code found in chapter three of The Little Schemer
   """
 
-  @spec rember(any, list(any)) :: list(any)
   @doc """
   takes an atom and a list and removes the first instance of that atom. tail call optimized
 
@@ -18,6 +17,7 @@ defmodule ChapterThree do
       iex> ChapterThree.rember(:a, [:a, :b, :c, :a])
       [:b, :c, :a]
   """
+  @spec rember(any, list(any)) :: list(any)
   def rember(item, list) do
     rember_helper(item, list, [])
   end
@@ -32,36 +32,6 @@ defmodule ChapterThree do
     rember_helper(item, tail, [head | acc])
   end
 
-  @spec rember_nopt(any, list(any)) :: list(any)
-  @doc """
-  takes an atom and a list and removes the first instance of that atom. Without tail call optimization
-
-  ## Examples
-
-      iex> ChapterThree.rember_nopt(:a, [])
-      []
-
-      iex> ChapterThree.rember_nopt(:b, [:a, :b, :c])
-      [:a, :c]
-
-      iex> ChapterThree.rember_nopt(:a, [:a, :b, :c, :a])
-      [:b, :c, :a]
-  """
-  def rember_nopt(item, list) do
-    rember_nopt_helper(item, list)
-  end
-
-  defp rember_nopt_helper(_item, []), do: []
-
-  defp rember_nopt_helper(item, [item | tail]) do
-    tail
-  end
-
-  defp rember_nopt_helper(item, [head | tail]) do
-    [head] ++ rember_nopt_helper(item, tail)
-  end
-
-  @spec firsts(list(any)) :: list(any)
   @doc """
   takes a list of lists and returns the first element of each list
 
@@ -76,6 +46,7 @@ defmodule ChapterThree do
       iex> ChapterThree.firsts([[[:a, :b], :c], [:d, :e]])
       [[:a, :b], :d]
   """
+  @spec firsts(list(any)) :: list(any)
   def firsts(list) do
     firsts_helper(list, [])
   end
@@ -86,7 +57,6 @@ defmodule ChapterThree do
     firsts_helper(tail, [head | acc])
   end
 
-@spec insertR(any, any, list(any)) :: list (any)
 @doc"""
 inserts new to the right of old.
 
@@ -100,6 +70,7 @@ inserts new to the right of old.
     iex> ChapterThree.insertR(:c, :b, [:a, :b])
     [:a, :b, :c]
 """
+@spec insertR(any, any, list(any)) :: list (any)
 def insertR(new, old, l) do
   insertR_helper(new, old, l, [])
 end
@@ -114,7 +85,6 @@ defp insertR_helper(new, old, [head | tail], acc) do
   insertR_helper(new, old, tail, [head | acc])
 end
 
-@spec insertL(any, any, list(any)) :: list (any)
 @doc"""
 inserts new to the left of old.
 
@@ -128,6 +98,7 @@ inserts new to the left of old.
     iex> ChapterThree.insertL(:b, :c, [:a, :c])
     [:a, :b, :c]
 """
+@spec insertL(any, any, list(any)) :: list (any)
 def insertL(new, old, l) do
   insertL_helper(new, old, l, [])
 end
@@ -142,7 +113,6 @@ defp insertL_helper(new, old, [head | tail], acc) do
   insertL_helper(new, old, tail, [head | acc])
 end
 
-@spec subst(any, any, list(any)) :: list (any)
 @doc"""
 substitutes first occurrence of old with new.
 
@@ -156,6 +126,7 @@ substitutes first occurrence of old with new.
     iex> ChapterThree.subst(:c, :b, [:a, :b])
     [:a, :c]
 """
+@spec subst(any, any, list(any)) :: list (any)
 def subst(new, old, l) do
   subst_helper(new, old, l, [])
 end
@@ -170,7 +141,6 @@ defp subst_helper(new, old, [head | tail], acc) do
   subst_helper(new, old, tail, [head | acc])
 end
 
-@spec subst2(any, any, any, list(any)) :: list (any)
 @doc"""
 substitutes either the first occurrence of o1 or the first occurrence of o2 with new.
 
@@ -187,6 +157,7 @@ substitutes either the first occurrence of o1 or the first occurrence of o2 with
     iex> ChapterThree.subst2(:c, :x, :d, [:a, :b, :d])
     [:a, :b, :c]
 """
+@spec subst2(any, any, any, list(any)) :: list (any)
 def subst2(new, o1, o2, l) do
   subst2_helper(new, o1, o2, l, [])
 end
@@ -205,7 +176,6 @@ defp subst2_helper(new, o1, o2, [head | tail], acc) do
   subst2_helper(new, o1, o2, tail, [head | acc])
 end
 
-  @spec multirember(any, list(any)) :: list(any)
   @doc """
   takes an atom and a list and removes the first instance of that atom
 
@@ -220,6 +190,7 @@ end
       iex> ChapterThree.multirember(:a, [:a, :b, :c, :a])
       [:b, :c]
   """
+  @spec multirember(any, list(any)) :: list(any)
   def multirember(item, list) do
     multirember_helper(item, list, [])
   end
@@ -234,7 +205,6 @@ end
     multirember_helper(item, tail, [head | acc])
   end
 
-@spec multiinsertR(any, any, list(any)) :: list (any)
 @doc"""
 inserts new to the right of every occurrence of old.
 
@@ -248,6 +218,7 @@ inserts new to the right of every occurrence of old.
     iex> ChapterThree.multiinsertR(:c, :b, [:a, :b, :b])
     [:a, :b, :c, :b, :c]
 """
+@spec multiinsertR(any, any, list(any)) :: list (any)
 def multiinsertR(new, old, l) do
   multiinsertR_helper(new, old, l, [])
 end
@@ -262,7 +233,6 @@ defp multiinsertR_helper(new, old, [head | tail], acc) do
   multiinsertR_helper(new, old, tail, [head | acc])
 end
 
-@spec multiinsertL(any, any, list(any)) :: list (any)
 @doc"""
 inserts new to the left of every occurrence of old.
 
@@ -276,6 +246,7 @@ inserts new to the left of every occurrence of old.
     iex> ChapterThree.multiinsertL(:c, :b, [:a, :b, :b])
     [:a, :c, :b, :c, :b]
 """
+@spec multiinsertL(any, any, list(any)) :: list (any)
 def multiinsertL(new, old, l) do
   multiinsertL_helper(new, old, l, [])
 end
@@ -290,7 +261,6 @@ defp multiinsertL_helper(new, old, [head | tail], acc) do
   multiinsertL_helper(new, old, tail, [head | acc])
 end
 
-@spec multisubst(any, any, list(any)) :: list (any)
 @doc"""
 substitutes every occurrence of old with new.
 
@@ -301,6 +271,7 @@ substitutes every occurrence of old with new.
     iex> ChapterThree.multisubst(:b, :a, [:a, :c, :a])
     [:b, :c, :b]
 """
+@spec multisubst(any, any, list(any)) :: list (any)
 def multisubst(new, old, l) do
   multisubst_helper(new, old, l, [])
 end

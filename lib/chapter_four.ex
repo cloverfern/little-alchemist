@@ -5,7 +5,6 @@ defmodule ChapterFour do
   defp add1(n), do: n + 1
   defp sub1(n), do: n - 1
 
-  @spec plus(number, number) :: number
   @doc """
   `plus` takes in two numbers and returns their sum
 
@@ -22,6 +21,7 @@ defmodule ChapterFour do
   iex> ChapterFour.plus(-6, 2)
   -4
   """
+  @spec plus(number, number) :: number
   def plus(n1, n2) do
     plus_helper(n1, n2, n1)
   end
@@ -39,7 +39,6 @@ defmodule ChapterFour do
     plus_helper(n1, sub1(n2), add1(acc))
   end
 
-  @spec minus(number, number) :: number
   @doc"""
   `minus` takes in two numbers and returns their difference
   ## Examples
@@ -49,6 +48,7 @@ defmodule ChapterFour do
   iex> ChapterFour.minus(3, -1)
   4
   """
+  @spec minus(number, number) :: number
   def minus(n1, n2) do
     minus_helper(n1, n2, n1)
   end
@@ -66,7 +66,6 @@ defmodule ChapterFour do
     minus_helper(n1, sub1(n2), sub1(acc))
   end
 
-  @spec addtup(list(any)) :: number
   @doc """
   `addtup` takes in a list of numbers and returns the result of their sum
   ## Example
@@ -76,6 +75,7 @@ defmodule ChapterFour do
   iex> ChapterFour.addtup([1, 2, -3])
   0
   """
+  @spec addtup(list(any)) :: number
   def addtup(l) do
     addtup_helper(l, 0)
   end
@@ -88,7 +88,6 @@ defmodule ChapterFour do
     addtup_helper(tail, plus(acc, head))
   end
 
-  @spec mult(number, number) :: number
   @doc """
   `mult` takes 2 numbers and returns returns their product
   ## Examples
@@ -104,6 +103,7 @@ defmodule ChapterFour do
   iex> ChapterFour.mult(3, 0)
   0
   """
+  @spec mult(number, number) :: number
   def mult(n1, n2) do
     mult_helper(n1, n2, 0)
   end
@@ -121,7 +121,6 @@ defmodule ChapterFour do
     mult_helper(n1, sub1(n2), plus(acc, n1))
   end
 
-  @spec sumtup(list(number), list(number)) :: list(number)
   @doc """
     `sumtup` takes two lists of numbers and returns a new list where each element
      is the sum of the corresponding elements from the two input lists.
@@ -154,6 +153,7 @@ defmodule ChapterFour do
     It's the caller's responsibility to ensure that both lists contain only
     numbers.
   """
+  @spec sumtup(list(number), list(number)) :: list(number)
   def sumtup(list_a, list_b) do
     sumtup_helper(list_a, list_b, [])
   end
@@ -179,7 +179,6 @@ defmodule ChapterFour do
     sumtup_helper(tail_a, tail_b, [plus(head_a, head_b) | acc])
   end
 
-  @spec sumtup_map(list(number), list(number)) :: list(number)
   @doc """
     `sumtup_map` does the same as `sumtup` but uses map to do it
 
@@ -199,12 +198,12 @@ defmodule ChapterFour do
     numbers.
     - Lists must be the same length
   """
+  @spec sumtup_map(list(number), list(number)) :: list(number)
   def sumtup_map(list_a, list_b) do
     Enum.zip(list_a, list_b)
     |> Enum.map(fn {a, b} -> plus(a, b) end)
   end
 
-  @spec greater_than(number, number) :: boolean
   @doc """
   `greater_than` takes in two numbers and returns true if the first number is
   larger than the second, otherwise it returns false.
@@ -219,6 +218,7 @@ defmodule ChapterFour do
   iex> ChapterFour.greater_than(3, 3)
   false
   """
+  @spec greater_than(number, number) :: boolean
   def greater_than(0, _m), do: false
   def greater_than(_n, 0), do: true
 
@@ -226,7 +226,6 @@ defmodule ChapterFour do
     greater_than(sub1(n), sub1(m))
   end
 
-  @spec less_than(number, number) :: boolean
   @doc """
   `less_than` takes in two numbers and returns true if the first number is
   smaller than the second, otherwise it returns false.
@@ -241,6 +240,7 @@ defmodule ChapterFour do
   iex> ChapterFour.less_than(3, 3)
   false
   """
+  @spec less_than(number, number) :: boolean
   def less_than(_n, 0), do: false
   def less_than(0, _m), do: true
 
@@ -248,7 +248,6 @@ defmodule ChapterFour do
     less_than(sub1(n), sub1(m))
   end
 
-  @spec equal(number, number) :: boolean
   @doc """
   `equal` takes in two numbers and returns true if the first number is
   equal to the second, otherwise it returns false.
@@ -263,18 +262,15 @@ defmodule ChapterFour do
   iex> ChapterFour.equal(3, 3)
   true
   """
+  @spec equal(number, number) :: boolean
   def equal(n, m) do
     cond do
-      less_than(n, m) ->
-        false
-      greater_than(n, m) ->
-        false
-      true ->
-        true
+      less_than(n, m) -> false
+      greater_than(n, m) -> false
+      true -> true
     end
   end
 
-  @spec exp(number, number) :: number
   @doc """
   `exp` takes two numbers and returns the first number raised to the power of
   the second number
@@ -292,6 +288,7 @@ defmodule ChapterFour do
   iex> ChapterFour.exp(1, 50)
   1
   """
+  @spec exp(number, number) :: number
   def exp(n, pow) do
     exp_helper(n, pow, 1)
   end
@@ -308,7 +305,6 @@ defmodule ChapterFour do
     exp_helper(n, sub1(pow), mult(acc, n))
   end
 
-  @spec div(number, number) :: number
   @doc """
   `div` takes in two numbers and returns the quotient of the two
   ## Examples
@@ -324,6 +320,7 @@ defmodule ChapterFour do
   iex> ChapterFour.div(8, 3)
   2
   """
+  @spec div(number, number) :: number
   def div(n, m) do
     div_helper(n, m, 0)
   end
@@ -337,7 +334,6 @@ defmodule ChapterFour do
     div_helper(minus(n, m), m, add1(acc))
   end
 
-  @spec len(list(any)) :: number
   @doc """
   `len` receives a list and returns its length
   ## Examples
@@ -347,6 +343,7 @@ defmodule ChapterFour do
   iex> ChapterFour.len([1, 2, 3])
   3
   """
+  @spec len(list(any)) :: number
   def len(list) do
     len_helper(list, 0)
   end
@@ -359,7 +356,6 @@ defmodule ChapterFour do
     len_helper(tail, add1(acc))
   end
 
-  @spec len_reduce(list(any)) :: number
   @doc """
   `len_reduce` receives a list and returns its length
   ## Examples
@@ -369,9 +365,9 @@ defmodule ChapterFour do
   iex> ChapterFour.len_reduce([1, 2, 3])
   3
   """
+  @spec len_reduce(list(any)) :: number
   def len_reduce(list), do: Enum.reduce(list, 0,  fn _, acc -> add1(acc) end)
 
-  @spec pick(number, list(any)) :: any
   @doc """
   `pick` takes in a number and a list and returns the value at that location in
   the list. The number is zero indexed. The caller is responsible for passing a
@@ -390,7 +386,7 @@ defmodule ChapterFour do
   iex> ChapterFour.pick(-1, [1, 2, 3])
   3
   """
-
+  @spec pick(number, list(any)) :: any
   def pick(i, list)
   when i < 0 do
     i = plus len(list), i
@@ -405,7 +401,6 @@ defmodule ChapterFour do
     pick(sub1(i), tail)
   end
 
-  @spec rempick(number, list(any)) :: any
   @doc """
   `rempick` takes in a number and a list and returns the list without the value
   at the location of the number. The list is zero indexed.
@@ -423,6 +418,7 @@ defmodule ChapterFour do
   iex> ChapterFour.rempick(-1, [1, 2, 3])
   [1, 2]
   """
+  @spec rempick(number, list(any)) :: any
   def rempick(i, list) do
     rempick_helper(i, list, [])
   end
@@ -443,7 +439,6 @@ defmodule ChapterFour do
     rempick_helper(sub1(i), tail, [head | acc])
   end
 
-  @spec rempick_reduce(number, list(any)) :: any
   @doc """
   `rempick_reduce` takes in a number and a list and returns the list without the value
   at the location of the number. The list is zero indexed.
@@ -461,6 +456,7 @@ defmodule ChapterFour do
   iex> ChapterFour.rempick_reduce(-1, [1, 2, 3])
   [1, 2]
   """
+  @spec rempick_reduce(number, list(any)) :: any
   def rempick_reduce(i, list)
   when i < 0 do
     i = plus(len_reduce(list), i)
@@ -477,7 +473,6 @@ defmodule ChapterFour do
     |> Enum.reverse
   end
 
-  @spec no_nums(list(any)) :: list(any)
   @doc """
   `no_nums` takes in a list and removes every numerical element in the list
 
@@ -485,7 +480,7 @@ defmodule ChapterFour do
   iex> ChapterFour.no_nums([1, :a, 2, :b])
   [:a, :b]
   """
-
+  @spec no_nums(list(any)) :: list(any)
   def no_nums(list) do
     no_nums_helper(list, [])
   end
@@ -504,7 +499,6 @@ defmodule ChapterFour do
     no_nums_helper(tail, [head | acc])
   end
 
-  @spec no_nums_filter(list(any)) :: list(any)
   @doc """
   `no_nums_filter` takes in a list and removes every numerical element in the list
 
@@ -512,13 +506,12 @@ defmodule ChapterFour do
   iex> ChapterFour.no_nums_filter([1, :a, 2, :b])
   [:a, :b]
   """
-
+  @spec no_nums_filter(list(any)) :: list(any)
   def no_nums_filter(list) do
     list
     |> Enum.filter(fn x -> not is_number(x) end)
   end
 
-  @spec all_nums(list(any)) :: list(any)
   @doc """
   `all_nums` takes in a list and removes every non-numerical element in the list
 
@@ -526,7 +519,7 @@ defmodule ChapterFour do
   iex> ChapterFour.all_nums([1, :a, 2, :b])
   [1, 2]
   """
-
+  @spec all_nums(list(any)) :: list(any)
   def all_nums(list) do
     all_nums_helper(list, [])
   end
@@ -545,7 +538,6 @@ defmodule ChapterFour do
     all_nums_helper(tail, [head | acc])
   end
 
-  @spec all_nums_filter(list(any)) :: list(any)
   @doc """
   `all_nums_filter` takes in a list and removes every non-numerical element in the list
 
@@ -553,13 +545,12 @@ defmodule ChapterFour do
   iex> ChapterFour.all_nums_filter([1, :a, 2, :b])
   [1, 2]
   """
-
+  @spec all_nums_filter(list(any)) :: list(any)
   def all_nums_filter(list) do
     list
     |> Enum.filter(fn x -> is_number(x) end)
   end
 
-  @spec occur(any, list(any)) :: number
   @doc """
   `occur` takes in any, and a list and counts the number of times that the
   element appears in the list
@@ -574,7 +565,7 @@ defmodule ChapterFour do
   iex> ChapterFour.occur(:a, [:a, :b, :a, :c, :a])
   3
   """
-
+  @spec occur(any, list(any)) :: number
   def occur(elem, list) do
     occur_helper(elem, list, 0)
   end
@@ -591,7 +582,6 @@ defmodule ChapterFour do
     occur_helper(elem, tail, acc)
   end
 
-  @spec occur_reduce(any, list(any)) :: number
   @doc """
   `occur_reduce` takes in any, and a list and counts the number of times that the
   element appears in the list
@@ -606,7 +596,7 @@ defmodule ChapterFour do
   iex> ChapterFour.occur_reduce(:a, [:a, :b, :a, :c, :a])
   3
   """
-
+  @spec occur_reduce(any, list(any)) :: number
   def occur_reduce(elem, list) do
     list
     |> Enum.reduce(0, fn
@@ -614,5 +604,4 @@ defmodule ChapterFour do
       _, acc -> acc
     end)
   end
-
 end
