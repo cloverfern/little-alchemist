@@ -22,10 +22,12 @@ defmodule ChapterThree do
     rember_helper(item, list, [])
   end
 
-  defp rember_helper(_item, [], acc), do: acc |> Enum.reverse
+  defp rember_helper(_item, [], acc), do: Enum.reverse(acc)
 
   defp rember_helper(item, [item | tail], acc) do
-    Enum.reverse(acc) ++ tail
+    acc
+    |> Enum.reverse()
+    |> Enum.concat(tail)
   end
 
   defp rember_helper(item, [head | tail], acc) do
@@ -51,7 +53,7 @@ defmodule ChapterThree do
     firsts_helper(list, [])
   end
 
-  defp firsts_helper([], acc), do: acc |> Enum.reverse
+  defp firsts_helper([], acc), do: Enum.reverse(acc)
 
   defp firsts_helper([[head | _rest] | tail], acc) do
     firsts_helper(tail, [head | acc])
@@ -75,10 +77,12 @@ def insertR(new, old, l) do
   insertR_helper(new, old, l, [])
 end
 
-defp insertR_helper(_new, _old, [], acc), do: acc |> Enum.reverse
+defp insertR_helper(_new, _old, [], acc), do: Enum.reverse(acc)
 
 defp insertR_helper(new, old, [old | tail], acc) do
-  Enum.reverse(acc) ++ [old, new | tail]
+  acc
+  |> Enum.reverse()
+  |> Enum.concat([old, new | tail])
 end
 
 defp insertR_helper(new, old, [head | tail], acc) do
@@ -103,10 +107,12 @@ def insertL(new, old, l) do
   insertL_helper(new, old, l, [])
 end
 
-defp insertL_helper(_new, _old, [], acc), do: acc |> Enum.reverse
+defp insertL_helper(_new, _old, [], acc), do: Enum.reverse(acc)
 
 defp insertL_helper(new, old, [old | tail], acc) do
-  Enum.reverse(acc) ++ [new, old | tail]
+  acc
+  |> Enum.reverse()
+  |> Enum.concat([new, old | tail])
 end
 
 defp insertL_helper(new, old, [head | tail], acc) do
@@ -131,10 +137,12 @@ def subst(new, old, l) do
   subst_helper(new, old, l, [])
 end
 
-defp subst_helper(_new, _old, [], acc), do: acc |> Enum.reverse
+defp subst_helper(_new, _old, [], acc), do: Enum.reverse(acc)
 
 defp subst_helper(new, old, [old | tail], acc) do
-  Enum.reverse(acc) ++ [new | tail]
+  acc
+  |> Enum.reverse()
+  |> Enum.concat([new | tail])
 end
 
 defp subst_helper(new, old, [head | tail], acc) do
@@ -162,14 +170,18 @@ def subst2(new, o1, o2, l) do
   subst2_helper(new, o1, o2, l, [])
 end
 
-defp subst2_helper(_new, _o1, _o2, [], acc), do: acc |> Enum.reverse
+defp subst2_helper(_new, _o1, _o2, [], acc), do: Enum.reverse(acc)
 
 defp subst2_helper(new, o1, _o2, [o1 | tail], acc) do
-  Enum.reverse(acc) ++ [new | tail]
+  acc
+  |> Enum.reverse()
+  |> Enum.concat([new | tail])
 end
 
 defp subst2_helper(new, _o1, o2, [o2 | tail], acc) do
-  Enum.reverse(acc) ++ [new | tail]
+  acc
+  |> Enum.reverse()
+  |> Enum.concat([new | tail])
 end
 
 defp subst2_helper(new, o1, o2, [head | tail], acc) do
@@ -195,7 +207,7 @@ end
     multirember_helper(item, list, [])
   end
 
-  defp multirember_helper(_item, [], acc), do: acc |> Enum.reverse
+  defp multirember_helper(_item, [], acc), do: Enum.reverse(acc)
 
   defp multirember_helper(item, [item | tail], acc) do
     multirember_helper(item, tail, acc)
@@ -223,7 +235,7 @@ def multiinsertR(new, old, l) do
   multiinsertR_helper(new, old, l, [])
 end
 
-defp multiinsertR_helper(_new, _old, [], acc), do: acc |> Enum.reverse
+defp multiinsertR_helper(_new, _old, [], acc), do: Enum.reverse(acc)
 
 defp multiinsertR_helper(new, old, [old | tail], acc) do
   multiinsertR_helper(new, old, tail, [new, old | acc])
@@ -251,7 +263,7 @@ def multiinsertL(new, old, l) do
   multiinsertL_helper(new, old, l, [])
 end
 
-defp multiinsertL_helper(_new, _old, [], acc), do: acc |> Enum.reverse
+defp multiinsertL_helper(_new, _old, [], acc), do: Enum.reverse(acc)
 
 defp multiinsertL_helper(new, old, [old | tail], acc) do
   multiinsertL_helper(new, old, tail, [old, new | acc])
@@ -276,7 +288,7 @@ def multisubst(new, old, l) do
   multisubst_helper(new, old, l, [])
 end
 
-defp multisubst_helper(_new, _old, [], acc), do: acc |> Enum.reverse
+defp multisubst_helper(_new, _old, [], acc), do: Enum.reverse(acc)
 
 defp multisubst_helper(new, old, [old | tail], acc) do
   multisubst_helper(new, old, tail, [new | acc])

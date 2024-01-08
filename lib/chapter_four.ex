@@ -265,9 +265,14 @@ defmodule ChapterFour do
   @spec equal(number, number) :: boolean
   def equal(n, m) do
     cond do
-      less_than(n, m) -> false
-      greater_than(n, m) -> false
-      true -> true
+      less_than(n, m) ->
+         false
+
+      greater_than(n, m) ->
+        false
+
+      true ->
+        true
     end
   end
 

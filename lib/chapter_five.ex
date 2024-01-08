@@ -1,4 +1,9 @@
 defmodule ChapterFive do
+  @moduledoc """
+  `ChapterFive` implrements the functions found in chapter five of The Little
+  Schemer
+  """
+
   @doc """
   `rember_star` takes in an atom and a list and removes every instance of the
   atom in the list or in inner lists
