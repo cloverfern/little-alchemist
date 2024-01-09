@@ -18,25 +18,25 @@ defmodule ChapterFive do
   """
   @spec rember_star(any, list(any)) :: list(any)
   def rember_star(elem, list) do
-    rember_star_helper(elem, list, [])
+    rember_star_acc(elem, list, [])
   end
 
-  defp rember_star_helper(_elem, [], acc) do
+  defp rember_star_acc(_elem, [], acc) do
     acc
     |> Enum.reverse
   end
 
-  defp rember_star_helper(elem, [head | tail], acc)
+  defp rember_star_acc(elem, [head | tail], acc)
   when is_list(head) do
-    rember_star_helper(elem, tail, [rember_star_helper(elem, head, []) | acc])
+    rember_star_acc(elem, tail, [rember_star_acc(elem, head, []) | acc])
   end
 
-  defp rember_star_helper(elem, [elem | tail], acc) do
-    rember_star_helper(elem, tail, acc)
+  defp rember_star_acc(elem, [elem | tail], acc) do
+    rember_star_acc(elem, tail, acc)
   end
 
-  defp rember_star_helper(elem, [head | tail], acc) do
-    rember_star_helper(elem, tail, [head | acc])
+  defp rember_star_acc(elem, [head | tail], acc) do
+    rember_star_acc(elem, tail, [head | acc])
   end
 
   @doc """
@@ -50,22 +50,22 @@ defmodule ChapterFive do
   """
   @spec insertR_star(any, any, list(any)) :: list(any)
   def insertR_star(new, old, list) do
-    insertR_star_helper(new, old, list, [])
+    insertR_star_acc(new, old, list, [])
   end
 
-  defp insertR_star_helper(_new, _old, [], acc), do: acc |> Enum.reverse
+  defp insertR_star_acc(_new, _old, [], acc), do: acc |> Enum.reverse
 
-  defp insertR_star_helper(new, old, [head | tail], acc)
+  defp insertR_star_acc(new, old, [head | tail], acc)
   when is_list(head) do
-    insertR_star_helper(new, old, tail, [insertR_star_helper(new, old, head, []) | acc])
+    insertR_star_acc(new, old, tail, [insertR_star_acc(new, old, head, []) | acc])
   end
 
-  defp insertR_star_helper(new, old, [old | tail], acc) do
-    insertR_star_helper(new, old, tail, [new, old | acc])
+  defp insertR_star_acc(new, old, [old | tail], acc) do
+    insertR_star_acc(new, old, tail, [new, old | acc])
   end
 
-  defp insertR_star_helper(new, old, [head | tail], acc) do
-    insertR_star_helper(new, old, tail, [head | acc])
+  defp insertR_star_acc(new, old, [head | tail], acc) do
+    insertR_star_acc(new, old, tail, [head | acc])
   end
 
 end
