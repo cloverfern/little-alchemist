@@ -19,19 +19,21 @@ defmodule ChapterThree do
   """
   @spec rember(any, list(any)) :: list(any)
   def rember(item, list) do
-    rember_helper(item, list, [])
+    rember_acc(item, list, [])
   end
 
-  defp rember_helper(_item, [], acc), do: Enum.reverse(acc)
+  defp rember_acc(_item, [], acc) do
+    Enum.reverse(acc)
+  end
 
-  defp rember_helper(item, [item | tail], acc) do
+  defp rember_acc(item, [item | tail], acc) do
     acc
     |> Enum.reverse()
     |> Enum.concat(tail)
   end
 
-  defp rember_helper(item, [head | tail], acc) do
-    rember_helper(item, tail, [head | acc])
+  defp rember_acc(item, [head | tail], acc) do
+    rember_acc(item, tail, [head | acc])
   end
 
   @doc """
@@ -50,13 +52,15 @@ defmodule ChapterThree do
   """
   @spec firsts(list(any)) :: list(any)
   def firsts(list) do
-    firsts_helper(list, [])
+    firsts_acc(list, [])
   end
 
-  defp firsts_helper([], acc), do: Enum.reverse(acc)
+  defp firsts_acc([], acc) do
+    Enum.reverse(acc)
+  end
 
-  defp firsts_helper([[head | _rest] | tail], acc) do
-    firsts_helper(tail, [head | acc])
+  defp firsts_acc([[head | _rest] | tail], acc) do
+    firsts_acc(tail, [head | acc])
   end
 
 @doc"""
@@ -74,19 +78,21 @@ inserts new to the right of old.
 """
 @spec insertR(any, any, list(any)) :: list (any)
 def insertR(new, old, l) do
-  insertR_helper(new, old, l, [])
+  insertR_acc(new, old, l, [])
 end
 
-defp insertR_helper(_new, _old, [], acc), do: Enum.reverse(acc)
+defp insertR_acc(_new, _old, [], acc) do
+  Enum.reverse(acc)
+end
 
-defp insertR_helper(new, old, [old | tail], acc) do
+defp insertR_acc(new, old, [old | tail], acc) do
   acc
   |> Enum.reverse()
   |> Enum.concat([old, new | tail])
 end
 
-defp insertR_helper(new, old, [head | tail], acc) do
-  insertR_helper(new, old, tail, [head | acc])
+defp insertR_acc(new, old, [head | tail], acc) do
+  insertR_acc(new, old, tail, [head | acc])
 end
 
 @doc"""
@@ -104,19 +110,21 @@ inserts new to the left of old.
 """
 @spec insertL(any, any, list(any)) :: list (any)
 def insertL(new, old, l) do
-  insertL_helper(new, old, l, [])
+  insertL_acc(new, old, l, [])
 end
 
-defp insertL_helper(_new, _old, [], acc), do: Enum.reverse(acc)
+defp insertL_acc(_new, _old, [], acc) do
+  Enum.reverse(acc)
+end
 
-defp insertL_helper(new, old, [old | tail], acc) do
+defp insertL_acc(new, old, [old | tail], acc) do
   acc
   |> Enum.reverse()
   |> Enum.concat([new, old | tail])
 end
 
-defp insertL_helper(new, old, [head | tail], acc) do
-  insertL_helper(new, old, tail, [head | acc])
+defp insertL_acc(new, old, [head | tail], acc) do
+  insertL_acc(new, old, tail, [head | acc])
 end
 
 @doc"""
@@ -134,19 +142,21 @@ substitutes first occurrence of old with new.
 """
 @spec subst(any, any, list(any)) :: list (any)
 def subst(new, old, l) do
-  subst_helper(new, old, l, [])
+  subst_acc(new, old, l, [])
 end
 
-defp subst_helper(_new, _old, [], acc), do: Enum.reverse(acc)
+defp subst_acc(_new, _old, [], acc) do
+  Enum.reverse(acc)
+end
 
-defp subst_helper(new, old, [old | tail], acc) do
+defp subst_acc(new, old, [old | tail], acc) do
   acc
   |> Enum.reverse()
   |> Enum.concat([new | tail])
 end
 
-defp subst_helper(new, old, [head | tail], acc) do
-  subst_helper(new, old, tail, [head | acc])
+defp subst_acc(new, old, [head | tail], acc) do
+  subst_acc(new, old, tail, [head | acc])
 end
 
 @doc"""
@@ -167,25 +177,27 @@ substitutes either the first occurrence of o1 or the first occurrence of o2 with
 """
 @spec subst2(any, any, any, list(any)) :: list (any)
 def subst2(new, o1, o2, l) do
-  subst2_helper(new, o1, o2, l, [])
+  subst2_acc(new, o1, o2, l, [])
 end
 
-defp subst2_helper(_new, _o1, _o2, [], acc), do: Enum.reverse(acc)
+defp subst2_acc(_new, _o1, _o2, [], acc) do
+  Enum.reverse(acc)
+end
 
-defp subst2_helper(new, o1, _o2, [o1 | tail], acc) do
+defp subst2_acc(new, o1, _o2, [o1 | tail], acc) do
   acc
   |> Enum.reverse()
   |> Enum.concat([new | tail])
 end
 
-defp subst2_helper(new, _o1, o2, [o2 | tail], acc) do
+defp subst2_acc(new, _o1, o2, [o2 | tail], acc) do
   acc
   |> Enum.reverse()
   |> Enum.concat([new | tail])
 end
 
-defp subst2_helper(new, o1, o2, [head | tail], acc) do
-  subst2_helper(new, o1, o2, tail, [head | acc])
+defp subst2_acc(new, o1, o2, [head | tail], acc) do
+  subst2_acc(new, o1, o2, tail, [head | acc])
 end
 
   @doc """
@@ -204,17 +216,19 @@ end
   """
   @spec multirember(any, list(any)) :: list(any)
   def multirember(item, list) do
-    multirember_helper(item, list, [])
+    multirember_acc(item, list, [])
   end
 
-  defp multirember_helper(_item, [], acc), do: Enum.reverse(acc)
-
-  defp multirember_helper(item, [item | tail], acc) do
-    multirember_helper(item, tail, acc)
+  defp multirember_acc(_item, [], acc) do
+    Enum.reverse(acc)
   end
 
-  defp multirember_helper(item, [head | tail], acc) do
-    multirember_helper(item, tail, [head | acc])
+  defp multirember_acc(item, [item | tail], acc) do
+    multirember_acc(item, tail, acc)
+  end
+
+  defp multirember_acc(item, [head | tail], acc) do
+    multirember_acc(item, tail, [head | acc])
   end
 
 @doc"""
@@ -232,17 +246,19 @@ inserts new to the right of every occurrence of old.
 """
 @spec multiinsertR(any, any, list(any)) :: list (any)
 def multiinsertR(new, old, l) do
-  multiinsertR_helper(new, old, l, [])
+  multiinsertR_acc(new, old, l, [])
 end
 
-defp multiinsertR_helper(_new, _old, [], acc), do: Enum.reverse(acc)
-
-defp multiinsertR_helper(new, old, [old | tail], acc) do
-  multiinsertR_helper(new, old, tail, [new, old | acc])
+defp multiinsertR_acc(_new, _old, [], acc) do
+  Enum.reverse(acc)
 end
 
-defp multiinsertR_helper(new, old, [head | tail], acc) do
-  multiinsertR_helper(new, old, tail, [head | acc])
+defp multiinsertR_acc(new, old, [old | tail], acc) do
+  multiinsertR_acc(new, old, tail, [new, old | acc])
+end
+
+defp multiinsertR_acc(new, old, [head | tail], acc) do
+  multiinsertR_acc(new, old, tail, [head | acc])
 end
 
 @doc"""
@@ -260,17 +276,19 @@ inserts new to the left of every occurrence of old.
 """
 @spec multiinsertL(any, any, list(any)) :: list (any)
 def multiinsertL(new, old, l) do
-  multiinsertL_helper(new, old, l, [])
+  multiinsertL_acc(new, old, l, [])
 end
 
-defp multiinsertL_helper(_new, _old, [], acc), do: Enum.reverse(acc)
-
-defp multiinsertL_helper(new, old, [old | tail], acc) do
-  multiinsertL_helper(new, old, tail, [old, new | acc])
+defp multiinsertL_acc(_new, _old, [], acc) do
+  Enum.reverse(acc)
 end
 
-defp multiinsertL_helper(new, old, [head | tail], acc) do
-  multiinsertL_helper(new, old, tail, [head | acc])
+defp multiinsertL_acc(new, old, [old | tail], acc) do
+  multiinsertL_acc(new, old, tail, [old, new | acc])
+end
+
+defp multiinsertL_acc(new, old, [head | tail], acc) do
+  multiinsertL_acc(new, old, tail, [head | acc])
 end
 
 @doc"""
@@ -285,17 +303,19 @@ substitutes every occurrence of old with new.
 """
 @spec multisubst(any, any, list(any)) :: list (any)
 def multisubst(new, old, l) do
-  multisubst_helper(new, old, l, [])
+  multisubst_acc(new, old, l, [])
 end
 
-defp multisubst_helper(_new, _old, [], acc), do: Enum.reverse(acc)
-
-defp multisubst_helper(new, old, [old | tail], acc) do
-  multisubst_helper(new, old, tail, [new | acc])
+defp multisubst_acc(_new, _old, [], acc) do
+  Enum.reverse(acc)
 end
 
-defp multisubst_helper(new, old, [head | tail], acc) do
-  multisubst_helper(new, old, tail, [head | acc])
+defp multisubst_acc(new, old, [old | tail], acc) do
+  multisubst_acc(new, old, tail, [new | acc])
+end
+
+defp multisubst_acc(new, old, [head | tail], acc) do
+  multisubst_acc(new, old, tail, [head | acc])
 end
 
 end
