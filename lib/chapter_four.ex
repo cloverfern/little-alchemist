@@ -159,19 +159,18 @@ defmodule ChapterFour do
   end
 
   defp sumtup_helper([], [], acc) do
-    acc
-    |> Enum.reverse
+    Enum.reverse(acc)
   end
 
   defp sumtup_helper([], [head | tail], acc) do
     acc
-    |> Enum.reverse
+    |> Enum.reverse()
     |> Enum.concat([head | tail])
   end
 
   defp sumtup_helper([head | tail], [], acc) do
     acc
-    |> Enum.reverse
+    |> Enum.reverse()
     |> Enum.concat([head | tail])
   end
 
@@ -394,8 +393,9 @@ defmodule ChapterFour do
   @spec pick(number, list(any)) :: any
   def pick(i, list)
   when i < 0 do
-    i = plus len(list), i
-    pick(i, list)
+    i
+    |> plus(len_reduce(list))
+    |> pick(list)
   end
 
   def pick(0, [head | _tail]) do
@@ -430,14 +430,15 @@ defmodule ChapterFour do
 
   defp rempick_helper(0, [_head | tail], acc) do
     acc
-    |> Enum.reverse
+    |> Enum.reverse()
     |> Enum.concat(tail)
   end
 
   defp rempick_helper(i, list, acc)
   when i < 0 do
-    i = plus len(list), i
-    rempick_helper(i, list, acc)
+    i
+    |> plus(len_reduce(list))
+    |> rempick_helper(list, acc)
   end
 
   defp rempick_helper(i, [head | tail], acc) do
@@ -464,13 +465,14 @@ defmodule ChapterFour do
   @spec rempick_reduce(number, list(any)) :: any
   def rempick_reduce(i, list)
   when i < 0 do
-    i = plus(len_reduce(list), i)
-    rempick_reduce(i, list)
+    i
+    |> plus(len_reduce(list))
+    |> rempick_reduce(list)
   end
 
   def rempick_reduce(i, list) do
     list
-    |> Enum.with_index
+    |> Enum.with_index()
     |> Enum.reduce([], fn
       {elem, index}, acc when index != i -> [elem | acc]
       _, acc -> acc
@@ -491,8 +493,7 @@ defmodule ChapterFour do
   end
 
   defp no_nums_helper([], acc) do
-    acc
-    |> Enum.reverse
+    Enum.reverse(acc)
   end
 
   defp no_nums_helper([head | tail], acc)
@@ -513,8 +514,7 @@ defmodule ChapterFour do
   """
   @spec no_nums_filter(list(any)) :: list(any)
   def no_nums_filter(list) do
-    list
-    |> Enum.filter(fn x -> not is_number(x) end)
+    Enum.filter(list, fn x -> not is_number(x) end)
   end
 
   @doc """
@@ -530,8 +530,7 @@ defmodule ChapterFour do
   end
 
   defp all_nums_helper([], acc) do
-    acc
-    |> Enum.reverse
+    Enum.reverse(acc)
   end
 
   defp all_nums_helper([head | tail], acc)
@@ -552,8 +551,7 @@ defmodule ChapterFour do
   """
   @spec all_nums_filter(list(any)) :: list(any)
   def all_nums_filter(list) do
-    list
-    |> Enum.filter(fn x -> is_number(x) end)
+    Enum.filter(list, fn x -> is_number(x) end)
   end
 
   @doc """
@@ -603,8 +601,10 @@ defmodule ChapterFour do
   """
   @spec occur_reduce(any, list(any)) :: number
   def occur_reduce(elem, list) do
-    list
-    |> Enum.reduce(0, fn
+    Enum.reduce(
+      list,
+      0,
+      fn
       e, acc when e == elem -> add1(acc)
       _, acc -> acc
     end)
