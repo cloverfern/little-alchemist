@@ -3,6 +3,7 @@ defmodule ChapterFour do
   Implements the code found in chapter four of The Little Schemer
   """
   defp add1(n), do: n + 1
+
   defp sub1(n), do: n - 1
 
   @doc """
@@ -23,20 +24,20 @@ defmodule ChapterFour do
   """
   @spec plus(number, number) :: number
   def plus(n1, n2) do
-    plus_helper(n1, n2, n1)
+    plus_total(n1, n2, n1)
   end
 
-  defp plus_helper(_n1, 0, acc) do
-    acc
+  defp plus_total(_n1, 0, total) do
+    total
   end
 
-  defp plus_helper(n1, n2, acc)
+  defp plus_total(n1, n2, total)
   when n2 < 0 do
-    plus_helper(n1, add1(n2), sub1(acc))
+    plus_total(n1, add1(n2), sub1(total))
   end
 
-  defp plus_helper(n1, n2, acc) do
-    plus_helper(n1, sub1(n2), add1(acc))
+  defp plus_total(n1, n2, total) do
+    plus_total(n1, sub1(n2), add1(total))
   end
 
   @doc"""
@@ -50,20 +51,20 @@ defmodule ChapterFour do
   """
   @spec minus(number, number) :: number
   def minus(n1, n2) do
-    minus_helper(n1, n2, n1)
+    minus_total(n1, n2, n1)
   end
 
-  defp minus_helper(_n1, 0, acc) do
-    acc
+  defp minus_total(_n1, 0, total) do
+    total
   end
 
-  defp minus_helper(n1, n2, acc)
+  defp minus_total(n1, n2, total)
   when n2 < 0 do
-    minus_helper(n1, add1(n2), add1(acc))
+    minus_total(n1, add1(n2), add1(total))
   end
 
-  defp minus_helper(n1, n2, acc) do
-    minus_helper(n1, sub1(n2), sub1(acc))
+  defp minus_total(n1, n2, total) do
+    minus_total(n1, sub1(n2), sub1(total))
   end
 
   @doc """
@@ -77,15 +78,15 @@ defmodule ChapterFour do
   """
   @spec addtup(list(any)) :: number
   def addtup(l) do
-    addtup_helper(l, 0)
+    addtup_acc(l, 0)
   end
 
-  defp addtup_helper([], acc) do
+  defp addtup_acc([], acc) do
     acc
   end
 
-  defp addtup_helper([head | tail], acc) do
-    addtup_helper(tail, plus(acc, head))
+  defp addtup_acc([head | tail], acc) do
+    addtup_acc(tail, plus(acc, head))
   end
 
   @doc """
@@ -105,20 +106,20 @@ defmodule ChapterFour do
   """
   @spec mult(number, number) :: number
   def mult(n1, n2) do
-    mult_helper(n1, n2, 0)
+    mult_total(n1, n2, 0)
   end
 
-  defp mult_helper(_n1, 0, acc) do
-    acc
+  defp mult_total(_n1, 0, total) do
+    total
   end
 
-  defp mult_helper(n1, n2, acc)
+  defp mult_total(n1, n2, total)
   when n2 < 0 do
-    mult_helper(n1, add1(n2), minus(acc, n1))
+    mult_total(n1, add1(n2), minus(total, n1))
   end
 
-  defp mult_helper(n1, n2, acc) do
-    mult_helper(n1, sub1(n2), plus(acc, n1))
+  defp mult_total(n1, n2, total) do
+    mult_total(n1, sub1(n2), plus(total, n1))
   end
 
   @doc """
@@ -155,27 +156,27 @@ defmodule ChapterFour do
   """
   @spec sumtup(list(number), list(number)) :: list(number)
   def sumtup(list_a, list_b) do
-    sumtup_helper(list_a, list_b, [])
+    sumtup_acc(list_a, list_b, [])
   end
 
-  defp sumtup_helper([], [], acc) do
+  defp sumtup_acc([], [], acc) do
     Enum.reverse(acc)
   end
 
-  defp sumtup_helper([], [head | tail], acc) do
+  defp sumtup_acc([], [head | tail], acc) do
     acc
     |> Enum.reverse()
     |> Enum.concat([head | tail])
   end
 
-  defp sumtup_helper([head | tail], [], acc) do
+  defp sumtup_acc([head | tail], [], acc) do
     acc
     |> Enum.reverse()
     |> Enum.concat([head | tail])
   end
 
-  defp sumtup_helper([head_a | tail_a], [head_b | tail_b], acc) do
-    sumtup_helper(tail_a, tail_b, [plus(head_a, head_b) | acc])
+  defp sumtup_acc([head_a | tail_a], [head_b | tail_b], acc) do
+    sumtup_acc(tail_a, tail_b, [plus(head_a, head_b) | acc])
   end
 
   @doc """
@@ -199,7 +200,8 @@ defmodule ChapterFour do
   """
   @spec sumtup_map(list(number), list(number)) :: list(number)
   def sumtup_map(list_a, list_b) do
-    Enum.zip(list_a, list_b)
+    list_a
+    |> Enum.zip(list_b)
     |> Enum.map(fn {a, b} -> plus(a, b) end)
   end
 
@@ -294,19 +296,19 @@ defmodule ChapterFour do
   """
   @spec exp(number, number) :: number
   def exp(n, pow) do
-    exp_helper(n, pow, 1)
+    exp_total(n, pow, 1)
   end
 
-  defp exp_helper(0, _pow, 1) do
+  defp exp_total(0, _pow, 1) do
     0
   end
 
-  defp exp_helper(_n, 0, acc) do
-    acc
+  defp exp_total(_n, 0, total) do
+    total
   end
 
-  defp exp_helper(n, pow, acc) do
-    exp_helper(n, sub1(pow), mult(acc, n))
+  defp exp_total(n, pow, total) do
+    exp_total(n, sub1(pow), mult(total, n))
   end
 
   @doc """
@@ -326,16 +328,16 @@ defmodule ChapterFour do
   """
   @spec div(number, number) :: number
   def div(n, m) do
-    div_helper(n, m, 0)
+    div_total(n, m, 0)
   end
 
-  defp div_helper(n, m, acc)
+  defp div_total(n, m, total)
   when n < m do
-    acc
+    total
   end
 
-  defp  div_helper(n, m, acc) do
-    div_helper(minus(n, m), m, add1(acc))
+  defp  div_total(n, m, total) do
+    div_total(minus(n, m), m, add1(total))
   end
 
   @doc """
@@ -349,15 +351,15 @@ defmodule ChapterFour do
   """
   @spec len(list(any)) :: number
   def len(list) do
-    len_helper(list, 0)
+    len_total(list, 0)
   end
 
-  defp len_helper([], acc) do
-    acc
+  defp len_total([], total) do
+    total
   end
 
-  defp len_helper([_head | tail], acc) do
-    len_helper(tail, add1(acc))
+  defp len_total([_head | tail], total) do
+    len_total(tail, add1(total))
   end
 
   @doc """
@@ -370,7 +372,7 @@ defmodule ChapterFour do
   3
   """
   @spec len_reduce(list(any)) :: number
-  def len_reduce(list), do: Enum.reduce(list, 0,  fn _, acc -> add1(acc) end)
+  def len_reduce(list), do: Enum.reduce(list, 0,  fn _, total -> add1(total) end)
 
   @doc """
   `pick` takes in a number and a list and returns the value at that location in
@@ -425,24 +427,24 @@ defmodule ChapterFour do
   """
   @spec rempick(number, list(any)) :: any
   def rempick(i, list) do
-    rempick_helper(i, list, [])
+    rempick_acc(i, list, [])
   end
 
-  defp rempick_helper(0, [_head | tail], acc) do
+  defp rempick_acc(0, [_head | tail], acc) do
     acc
     |> Enum.reverse()
     |> Enum.concat(tail)
   end
 
-  defp rempick_helper(i, list, acc)
+  defp rempick_acc(i, list, acc)
   when i < 0 do
     i
     |> plus(len_reduce(list))
-    |> rempick_helper(list, acc)
+    |> rempick_acc(list, acc)
   end
 
-  defp rempick_helper(i, [head | tail], acc) do
-    rempick_helper(sub1(i), tail, [head | acc])
+  defp rempick_acc(i, [head | tail], acc) do
+    rempick_acc(sub1(i), tail, [head | acc])
   end
 
   @doc """
@@ -489,20 +491,20 @@ defmodule ChapterFour do
   """
   @spec no_nums(list(any)) :: list(any)
   def no_nums(list) do
-    no_nums_helper(list, [])
+    no_nums_acc(list, [])
   end
 
-  defp no_nums_helper([], acc) do
+  defp no_nums_acc([], acc) do
     Enum.reverse(acc)
   end
 
-  defp no_nums_helper([head | tail], acc)
+  defp no_nums_acc([head | tail], acc)
   when is_number head do
-    no_nums_helper(tail, acc)
+    no_nums_acc(tail, acc)
   end
 
-  defp no_nums_helper([head | tail], acc) do
-    no_nums_helper(tail, [head | acc])
+  defp no_nums_acc([head | tail], acc) do
+    no_nums_acc(tail, [head | acc])
   end
 
   @doc """
@@ -526,20 +528,20 @@ defmodule ChapterFour do
   """
   @spec all_nums(list(any)) :: list(any)
   def all_nums(list) do
-    all_nums_helper(list, [])
+    all_nums_acc(list, [])
   end
 
-  defp all_nums_helper([], acc) do
+  defp all_nums_acc([], acc) do
     Enum.reverse(acc)
   end
 
-  defp all_nums_helper([head | tail], acc)
+  defp all_nums_acc([head | tail], acc)
   when not is_number head do
-    all_nums_helper(tail, acc)
+    all_nums_acc(tail, acc)
   end
 
-  defp all_nums_helper([head | tail], acc) do
-    all_nums_helper(tail, [head | acc])
+  defp all_nums_acc([head | tail], acc) do
+    all_nums_acc(tail, [head | acc])
   end
 
   @doc """
@@ -570,19 +572,19 @@ defmodule ChapterFour do
   """
   @spec occur(any, list(any)) :: number
   def occur(elem, list) do
-    occur_helper(elem, list, 0)
+    occur_acc(elem, list, 0)
   end
 
-  defp occur_helper(_elem, [], acc) do
+  defp occur_acc(_elem, [], acc) do
     acc
   end
 
-  defp occur_helper(elem, [elem | tail], acc) do
-    occur_helper(elem, tail, add1(acc))
+  defp occur_acc(elem, [elem | tail], acc) do
+    occur_acc(elem, tail, add1(acc))
   end
 
-  defp occur_helper(elem, [_head | tail], acc) do
-    occur_helper(elem, tail, acc)
+  defp occur_acc(elem, [_head | tail], acc) do
+    occur_acc(elem, tail, acc)
   end
 
   @doc """
@@ -601,10 +603,7 @@ defmodule ChapterFour do
   """
   @spec occur_reduce(any, list(any)) :: number
   def occur_reduce(elem, list) do
-    Enum.reduce(
-      list,
-      0,
-      fn
+    Enum.reduce(list, 0, fn
       e, acc when e == elem -> add1(acc)
       _, acc -> acc
     end)
