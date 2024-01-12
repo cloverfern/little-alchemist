@@ -22,8 +22,7 @@ defmodule ChapterFive do
   end
 
   defp rember_star_acc(_elem, [], acc) do
-    acc
-    |> Enum.reverse
+    Enum.reverse(acc)
   end
 
   defp rember_star_acc(elem, [head | tail], acc)
@@ -53,7 +52,9 @@ defmodule ChapterFive do
     insertR_star_acc(new, old, list, [])
   end
 
-  defp insertR_star_acc(_new, _old, [], acc), do: acc |> Enum.reverse
+  defp insertR_star_acc(_new, _old, [], acc) do
+    Enum.reverse(acc)
+  end
 
   defp insertR_star_acc(new, old, [head | tail], acc)
   when is_list(head) do
@@ -66,6 +67,41 @@ defmodule ChapterFive do
 
   defp insertR_star_acc(new, old, [head | tail], acc) do
     insertR_star_acc(new, old, tail, [head | acc])
+  end
+
+  @doc """
+  `occur_star` takes in a nested list and an item and counts the occurencces of the item in the
+  list and the lists within
+
+  ## Examples
+  iex> ChapterFive.occur_star([], :a)
+  0
+
+  iex> ChapterFive.occur_star([:a, :a], :a)
+  2
+
+  iex> ChapterFive.occur_star([:a, :b, [:a, :a, [:a, :b]]], :a)
+  4
+
+  iex> ChapterFive.occur_star([:a, [:a, :a]], :a)
+  3
+  """
+  @spec occur_star(list(any), any) :: integer
+  def occur_star(list, elem) do
+    occur_star_total(list, elem, 0)
+  end
+
+  defp occur_star_total([], _elem, total) do
+    total
+  end
+
+  defp occur_star_total([[_head | tail] | tail2], elem, total) do
+    occur_star_total(tail2, elem, total + occur_star_total(tail, elem, total))
+  end
+
+  # TODO: have a shared module of primitives as a separate repo
+  defp occur_star_total([elem | tail], elem, total) do
+    occur_star_total(tail, elem, total+1)
   end
 
 end
