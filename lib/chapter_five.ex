@@ -95,13 +95,17 @@ defmodule ChapterFive do
     total
   end
 
-  defp occur_star_total([[_head | tail] | tail2], elem, total) do
-    occur_star_total(tail2, elem, total + occur_star_total(tail, elem, total))
+  defp occur_star_total([[head | tail] | tail2], elem, total) do
+    occur_star_total(tail2, elem, occur_star_total([head|tail], elem, total))
   end
 
   # TODO: have a shared module of primitives as a separate repo
   defp occur_star_total([elem | tail], elem, total) do
     occur_star_total(tail, elem, total+1)
+  end
+
+  defp occur_star_total([_head | tail], elem, total) do
+    occur_star_total(tail, elem, total)
   end
 
 end
