@@ -95,8 +95,9 @@ defmodule ChapterFive do
     total
   end
 
-  defp occur_star_total([[head | tail] | tail2], elem, total) do
-    occur_star_total(tail2, elem, occur_star_total([head|tail], elem, total))
+  defp occur_star_total([head | tail], elem, total)
+  when is_list(head) do
+    occur_star_total(tail, elem, occur_star_total(head, elem, total))
   end
 
   defp occur_star_total([elem | tail], elem, total) do
@@ -130,6 +131,38 @@ defmodule ChapterFive do
       e, total when is_list(e) -> total + occur_star_reduce(e, elem)
       _, total -> total
       end)
+  end
+
+  @doc """
+  `subst_star`takes in a nested list and two elements. It returns a list with every instance of the
+  first element replaced by the second element
+
+  ## Examples
+  iex> ChapterFive.subst_star([], :a, :b)
+  []
+
+  iex> ChapterFive.subst_star([:z, :b, :c, [:z, :b, [:z, :b]]], :z, :a)
+  [:a, :b, :c, [:a, :b, [:a, :b]]]
+  """
+  def subst_star(list, old, new) do
+    subst_star_acc(list, old, new, [])
+  end
+
+  defp subst_star_acc([], _old, _new, acc) do
+    Enum.reverse(acc)
+  end
+
+  defp subst_star_acc([head | tail], old, new, acc)
+  when is_list(head) do
+    subst_star_acc(tail, old, new, [subst_star_acc(head, old, new, []) | acc])
+  end
+
+  defp subst_star_acc([old | tail], old, new, acc) do
+    subst_star_acc(tail, old, new, [new | acc])
+  end
+
+  defp subst_star_acc([head | tail], old, new, acc) do
+    subst_star_acc(tail, old, new, [head | acc])
   end
 
 end
