@@ -99,13 +99,37 @@ defmodule ChapterFive do
     occur_star_total(tail2, elem, occur_star_total([head|tail], elem, total))
   end
 
-  # TODO: have a shared module of primitives as a separate repo
   defp occur_star_total([elem | tail], elem, total) do
     occur_star_total(tail, elem, total+1)
   end
 
   defp occur_star_total([_head | tail], elem, total) do
     occur_star_total(tail, elem, total)
+  end
+
+  @doc """
+  `occur_star_reduce` takes in a nested list and an item and counts the occurencces of the item in the
+  list and the lists within
+
+  ## Examples
+  iex> ChapterFive.occur_star_reduce([], :a)
+  0
+
+  iex> ChapterFive.occur_star_reduce([:a, :a], :a)
+  2
+
+  iex> ChapterFive.occur_star_reduce([:a, :b, [:a, :a, [:a, :b]]], :a)
+  4
+
+  iex> ChapterFive.occur_star_reduce([:a, [:a, :a]], :a)
+  3
+  """
+  def occur_star_reduce(list, elem) do
+    Enum.reduce(list, 0, fn
+      e, total when e == elem -> total + 1
+      e, total when is_list(e) -> total + occur_star_reduce(e, elem)
+      _, total -> total
+      end)
   end
 
 end
