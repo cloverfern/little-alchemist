@@ -42,42 +42,50 @@ defmodule ChapterFive do
   inserted to the right of every occurance of the second value in the list
 
   ## Examples
-  iex> ChapterFive.insertR_star([:a, :c, [:a], [[:a, :c], :a], :a], :b, :a)
+  iex> ChapterFive.insertR_star([:a, :c, [:a], [[:a, :c], :a], :a], :a, :b)
   [:a, :b, :c, [:a, :b], [[:a, :b, :c], :a, :b], :a, :b]
   """
   @spec insertR_star(list(any), any, any) :: list(any)
-  def insertR_star(list, new, old) do
-    insertR_star_acc(list, new, old, [])
+  def insertR_star(list, old, new) do
+    insertR_star_acc(list, old, new, [])
   end
 
-  defp insertR_star_acc([], _new, _old, acc) do
+  defp insertR_star_acc([], _old, _new, acc) do
     Enum.reverse(acc)
   end
 
-  defp insertR_star_acc([head | tail], new, old, acc)
+  defp insertR_star_acc([head | tail], old, new, acc)
   when is_list(head) do
-    insertR_star_acc(tail, new, old, [insertR_star_acc(head, new, old, []) | acc])
+    insertR_star_acc(tail, old, new, [insertR_star_acc(head, old, new, []) | acc])
   end
 
-  defp insertR_star_acc([old | tail], new, old, acc) do
-    insertR_star_acc(tail, new, old, [new, old | acc])
+  defp insertR_star_acc([old | tail], old, new, acc) do
+    insertR_star_acc(tail, old, new, [new, old | acc])
   end
 
-  defp insertR_star_acc([head | tail], new, old, acc) do
-    insertR_star_acc(tail, new, old, [head | acc])
+  defp insertR_star_acc([head | tail], old, new, acc) do
+    insertR_star_acc(tail, old, new, [head | acc])
   end
 
-  # @doc """
-  # `insertR_star_reduce` takes in two values and a list. It returns a new list with the
-  # first value inserted to the right of every occurance of the second value in
-  # the list
+  @doc """
+  `insertR_star_reduce` takes in a list and two values. It returns a new list with the
+  first value inserted to the right of every occurance of the second value in
+  the list
 
-  # ## Examples
-  # iex> ChapterFive.insertR_star([:a, :c, [:a], [[:a, :c], :a], :a], :b, :a)
-  # [:a, :b, :c, [:a, :b], [[:a, :b, :c], :a, :b], :a, :b]
-  # """
-  # @spec insertR_star(any, any, list(any)) :: list(any)
-  #def insertR_star_reduce()
+  ## Examples
+  iex> ChapterFive.insertR_star_reduce([:a, :c, [:a], [[:a, :c], :a], :a], :a, :b)
+  [:a, :b, :c, [:a, :b], [[:a, :b, :c], :a, :b], :a, :b]
+  """
+  @spec insertR_star_reduce(list(any), any, any) :: list(any)
+  def insertR_star_reduce(list, old, new) do
+    list
+    |> Enum.reduce([], fn
+      elem, acc when is_list(elem) -> [insertR_star_reduce(elem, old, new) | acc]
+      elem, acc when elem == old -> [new, elem | acc]
+      elem, acc -> [elem | acc]
+      end)
+    |> Enum.reverse()
+  end
 
   @doc """
   `occur_star` takes in a nested list and an item and counts the occurencces of the item in the
