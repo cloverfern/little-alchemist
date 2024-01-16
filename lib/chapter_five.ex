@@ -39,7 +39,7 @@ defmodule ChapterFive do
 
   @doc """
   `insertR_star` takes in a list and two elements. It returns a new list with the first value
-  inserted to the right of every occurance of the second value in the list
+  inserted to the right of every occurrence of the second value in the list
 
   ## Examples
   iex> ChapterFive.insertR_star([:a, :c, [:a], [[:a, :c], :a], :a], :a, :b)
@@ -69,7 +69,7 @@ defmodule ChapterFive do
 
   @doc """
   `insertR_star_reduce` takes in a list and two values. It returns a new list with the
-  first value inserted to the right of every occurance of the second value in
+  first value inserted to the right of every occurrence of the second value in
   the list
 
   ## Examples
@@ -88,7 +88,7 @@ defmodule ChapterFive do
   end
 
   @doc """
-  `occur_star` takes in a nested list and an item and counts the occurencces of the item in the
+  `occur_star` takes in a nested list and an item and counts the occurrences of the item in the
   list and the lists within
 
   ## Examples
@@ -127,7 +127,7 @@ defmodule ChapterFive do
   end
 
   @doc """
-  `occur_star_reduce` takes in a nested list and an item and counts the occurencces of the item in the
+  `occur_star_reduce` takes in a nested list and an item and counts the occurrences of the item in the
   list and the lists within
 
   ## Examples
@@ -206,10 +206,53 @@ defmodule ChapterFive do
     |> Enum.reverse
   end
 
-  # @doc"""
-  # `insertl_star` takes a list and two elements. It inserts the second element to the left of every
-  # occurence of the first element.
-  # """
-  # @spec insertL_star
+  @doc"""
+  `insertL_star` takes a list and two elements. It inserts the second element to the left of every
+  occurrence of the first element.
+
+  ## Examples
+  iex> ChapterFive.insertL_star([:b, :c, [:b, :c, [:b, :c, :b]]], :b, :a)
+  [:a, :b, :c, [:a, :b, :c, [:a, :b, :c, :a, :b]]]
+  """
+  @spec insertL_star(list(any), any, any) :: list(any)
+  def insertL_star(list, old, new) do
+    insertL_star_acc(list, old, new, [])
+  end
+
+  defp insertL_star_acc([], _old, _new, acc) do
+    Enum.reverse(acc)
+  end
+
+  defp insertL_star_acc([head | tail], old, new, acc)
+  when is_list(head) do
+    insertL_star_acc(tail, old, new, [insertL_star_acc(head, old, new, []) | acc])
+  end
+
+  defp insertL_star_acc([old | tail], old, new, acc) do
+    insertL_star_acc(tail, old, new, [old, new | acc])
+  end
+
+  defp insertL_star_acc([head | tail], old, new, acc) do
+    insertL_star_acc(tail, old, new, [head | acc])
+  end
+
+  @doc"""
+  `insertL_star_reduce` takes a list and two elements. It inserts the second element to the left of
+  every occurrence of the first element.
+
+  ## Examples
+  iex> ChapterFive.insertL_star_reduce([:b, :c, [:b, :c, [:b, :c, :b]]], :b, :a)
+  [:a, :b, :c, [:a, :b, :c, [:a, :b, :c, :a, :b]]]
+  """
+  @spec insertL_star_reduce(list(any), any, any) :: list(any)
+  def insertL_star_reduce(list, old, new) do
+    list
+    |> Enum.reduce([], fn
+      elem, acc when is_list(elem) -> [insertL_star_reduce(elem, old, new) | acc]
+      elem, acc when elem == old -> [old, new | acc]
+      elem, acc -> [elem | acc]
+      end)
+    |> Enum.reverse()
+  end
 
 end
