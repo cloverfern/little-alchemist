@@ -1,73 +1,83 @@
 defmodule ChapterFive do
   @moduledoc """
-  `ChapterFive` implrements the functions found in chapter five of The Little
-  Schemer
+  `ChapterFive` implements the functions found in chapter five of The Little Schemer
   """
 
   @doc """
-  `rember_star` takes in an atom and a list and removes every instance of the
-  atom in the list or in inner lists
-  iex> ChapterFive.rember_star(:a, [])
+  `rember_star` a list and an atom and removes every instance of the atom in the list or in the
+  inner lists
+  iex> ChapterFive.rember_star([], :a)
   []
 
-  iex> ChapterFive.rember_star(:c, [[:a, :b, :c], :c])
+  iex> ChapterFive.rember_star([[:a, :b, :c], :c], :c)
   [[:a, :b]]
 
-  iex> ChapterFive.rember_star(:c, [[:c], [[:a, :b, :c], :c], :c])
+  iex> ChapterFive.rember_star([[:c], [[:a, :b, :c], :c], :c], :c)
   [[], [[:a, :b]]]
   """
-  @spec rember_star(any, list(any)) :: list(any)
-  def rember_star(elem, list) do
-    rember_star_acc(elem, list, [])
+  @spec rember_star(list(any), any) :: list(any)
+  def rember_star(list, elem) do
+    rember_star_acc(list, elem, [])
   end
 
-  defp rember_star_acc(_elem, [], acc) do
+  defp rember_star_acc([], _elem, acc) do
     Enum.reverse(acc)
   end
 
-  defp rember_star_acc(elem, [head | tail], acc)
+  defp rember_star_acc([head | tail], elem, acc)
   when is_list(head) do
-    rember_star_acc(elem, tail, [rember_star_acc(elem, head, []) | acc])
+    rember_star_acc(tail, elem, [rember_star_acc(head, elem, []) | acc])
   end
 
-  defp rember_star_acc(elem, [elem | tail], acc) do
-    rember_star_acc(elem, tail, acc)
+  defp rember_star_acc([elem | tail], elem, acc) do
+    rember_star_acc(tail, elem, acc)
   end
 
-  defp rember_star_acc(elem, [head | tail], acc) do
-    rember_star_acc(elem, tail, [head | acc])
+  defp rember_star_acc([head | tail], elem, acc) do
+    rember_star_acc(tail, elem, [head | acc])
   end
 
   @doc """
-  `insertR_star` takes in two values and a list. It returns a new list with the
-  first value inserted to the right of every occurance of the second value in
-  the list
+  `insertR_star` takes in a list and two elements. It returns a new list with the first value
+  inserted to the right of every occurance of the second value in the list
 
   ## Examples
-  iex> ChapterFive.insertR_star(:b, :a, [:a, :c, [:a], [[:a, :c], :a], :a])
+  iex> ChapterFive.insertR_star([:a, :c, [:a], [[:a, :c], :a], :a], :b, :a)
   [:a, :b, :c, [:a, :b], [[:a, :b, :c], :a, :b], :a, :b]
   """
-  @spec insertR_star(any, any, list(any)) :: list(any)
-  def insertR_star(new, old, list) do
-    insertR_star_acc(new, old, list, [])
+  @spec insertR_star(list(any), any, any) :: list(any)
+  def insertR_star(list, new, old) do
+    insertR_star_acc(list, new, old, [])
   end
 
-  defp insertR_star_acc(_new, _old, [], acc) do
+  defp insertR_star_acc([], _new, _old, acc) do
     Enum.reverse(acc)
   end
 
-  defp insertR_star_acc(new, old, [head | tail], acc)
+  defp insertR_star_acc([head | tail], new, old, acc)
   when is_list(head) do
-    insertR_star_acc(new, old, tail, [insertR_star_acc(new, old, head, []) | acc])
+    insertR_star_acc(tail, new, old, [insertR_star_acc(head, new, old, []) | acc])
   end
 
-  defp insertR_star_acc(new, old, [old | tail], acc) do
-    insertR_star_acc(new, old, tail, [new, old | acc])
+  defp insertR_star_acc([old | tail], new, old, acc) do
+    insertR_star_acc(tail, new, old, [new, old | acc])
   end
 
-  defp insertR_star_acc(new, old, [head | tail], acc) do
-    insertR_star_acc(new, old, tail, [head | acc])
+  defp insertR_star_acc([head | tail], new, old, acc) do
+    insertR_star_acc(tail, new, old, [head | acc])
   end
+
+  # @doc """
+  # `insertR_star_reduce` takes in two values and a list. It returns a new list with the
+  # first value inserted to the right of every occurance of the second value in
+  # the list
+
+  # ## Examples
+  # iex> ChapterFive.insertR_star([:a, :c, [:a], [[:a, :c], :a], :a], :b, :a)
+  # [:a, :b, :c, [:a, :b], [[:a, :b, :c], :a, :b], :a, :b]
+  # """
+  # @spec insertR_star(any, any, list(any)) :: list(any)
+  #def insertR_star_reduce()
 
   @doc """
   `occur_star` takes in a nested list and an item and counts the occurencces of the item in the
@@ -144,6 +154,7 @@ defmodule ChapterFive do
   iex> ChapterFive.subst_star([:z, :b, :c, [:z, :b, [:z, :b]]], :z, :a)
   [:a, :b, :c, [:a, :b, [:a, :b]]]
   """
+  @spec subst_star(list(any), any, any) :: list(any)
   def subst_star(list, old, new) do
     subst_star_acc(list, old, new, [])
   end
@@ -164,5 +175,33 @@ defmodule ChapterFive do
   defp subst_star_acc([head | tail], old, new, acc) do
     subst_star_acc(tail, old, new, [head | acc])
   end
+
+  @doc """
+  `subst_star_reduce` takes in a nested list and two elements. It returns a list with every instance of the
+  first element replaced by the second element
+
+  ## Examples
+  iex> ChapterFive.subst_star_reduce([], :a, :b)
+  []
+
+  iex> ChapterFive.subst_star_reduce([:z, :b, :c, [:z, :b, [:z, :b]]], :z, :a)
+  [:a, :b, :c, [:a, :b, [:a, :b]]]
+  """
+  @spec subst_star_reduce(list(any), any, any) :: list(any)
+  def subst_star_reduce(list, old, new) do
+    list
+    |> Enum.reduce([], fn
+      elem, acc when is_list(elem) -> [subst_star_reduce(elem, old, new) | acc]
+      elem, acc when elem == old -> [new | acc]
+      elem, acc -> [elem | acc]
+      end)
+    |> Enum.reverse
+  end
+
+  # @doc"""
+  # `insertl_star` takes a list and two elements. It inserts the second element to the left of every
+  # occurence of the first element.
+  # """
+  # @spec insertL_star
 
 end
