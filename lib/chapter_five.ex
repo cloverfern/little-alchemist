@@ -262,6 +262,9 @@ defmodule ChapterFive do
   ## Examples
   iex> ChapterFive.member_star([:a, :b, [:a, :b, :c]], :c)
   true
+
+  iex> ChapterFive.member_star([:a, :b, [:a, :b, :c]], :d)
+  false
   """
   @spec member_star(list(any), any) :: boolean
   def member_star([], _elem) do
@@ -279,6 +282,25 @@ defmodule ChapterFive do
 
   def member_star([_head | tail], elem) do
     member_star(tail, elem)
+  end
+
+  @doc"""
+  `member_star_reduce` takes a list and an element. It returns true if the element is in the list or in the
+  inner lists.
+
+  iex> ChapterFive.member_star_reduce([:a, :b, [:a, :b, :c]], :c)
+  true
+
+  iex> ChapterFive.member_star_reduce([:a, :b, [:a, :b, :c]], :d)
+  false
+  """
+  @spec member_star_reduce(list(any), any) :: boolean
+  def member_star_reduce(list, elem) do
+    Enum.reduce(list, false, fn
+      e, acc when is_list(e) -> acc || member_star_reduce(e, elem)
+      e, _acc when e == elem -> true
+      _e, _acc -> false
+    end)
   end
 
 end
