@@ -255,4 +255,30 @@ defmodule ChapterFive do
     |> Enum.reverse()
   end
 
+  @doc"""
+  `member_star` takes a list and an element. It returns true if the element is in the list or in the
+  inner lists.
+
+  ## Examples
+  iex> ChapterFive.member_star([:a, :b, [:a, :b, :c]], :c)
+  true
+  """
+  @spec member_star(list(any), any) :: boolean
+  def member_star([], _elem) do
+    false
+  end
+
+  def member_star([head | tail], elem)
+  when is_list(head) do
+    member_star(tail, elem) || member_star(head, elem)
+  end
+
+  def member_star([elem | _tail], elem) do
+    true
+  end
+
+  def member_star([_head | tail], elem) do
+    member_star(tail, elem)
+  end
+
 end
